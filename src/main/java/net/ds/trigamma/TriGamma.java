@@ -2,6 +2,12 @@ package net.ds.trigamma;
 
 import net.ds.trigamma.block.ModBlocks;
 import net.ds.trigamma.item.ModItems;
+import net.ds.trigamma.radiation.RadiationCapability;
+import net.ds.trigamma.radiation.RadiationEvents;
+import net.ds.trigamma.radiation.RadiationSyncPacket;
+import net.ds.trigamma.sound.ModSounds;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -45,10 +51,31 @@ public class TriGamma {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModSounds.register(modEventBus);
+
+        // ── Radiation: DataAttachment types ──────────────────────────────────
+        RadiationCapability.ATTACHMENT_TYPES.register(modEventBus);
+
+        // ── Radiation: Network packets ────────────────────────────────────────
+        modEventBus.addListener(TriGamma::registerPackets);
+
+        // ── Radiation: Game events (server tick, clone, etc.) ─────────────────
+        NeoForge.EVENT_BUS.register(new RadiationEvents());
 
         modEventBus.addListener(this::addCreative);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    }
+
+    private static void registerPackets(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(MODID).versioned("1.0");
+
+        // Server → Client: sync radiation values for HUD
+        registrar.playToClient(
+                RadiationSyncPacket.TYPE,
+                RadiationSyncPacket.STREAM_CODEC,
+                RadiationSyncPacket::handle
+        );
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -61,6 +88,10 @@ public class TriGamma {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.COAL_POWDER);
             event.accept(ModItems.COPPER_COIL);
+        }
+
+        if(event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(ModItems.GEIGER_COUNTER);
         }
 
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
