@@ -1,5 +1,6 @@
 package net.ds.trigamma;
 
+import net.ds.trigamma.item.ModCreativeModeTabs;
 import net.ds.trigamma.item.ModItems;
 import org.slf4j.Logger;
 
@@ -41,6 +42,8 @@ public class TriGamma {
         modEventBus.addListener(this::commonSetup);
 
         NeoForge.EVENT_BUS.register(this);
+
+        ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
 

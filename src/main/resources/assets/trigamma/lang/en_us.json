@@ -1,3 +1,5 @@
 {
-  "item.trigamma.coal_powder": "Coal Powder"
+  "item.trigamma.coal_powder": "Coal Powder",
+  "creativetab.trigamma.trigamma_items": "TriGamma Items",
+  "creativetab.trigamma.trigamma_blocks": "TriGamma Blocks"
 }
