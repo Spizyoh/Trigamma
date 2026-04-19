@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_column",
-  "texture": {
+  "textures": {
     "end": "trigamma:block/insulator_block_top",
     "side": "trigamma:block/insulator_block_side"
   }

@@ -5,6 +5,7 @@ import net.ds.trigamma.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -18,8 +19,15 @@ public class ModBlocks {
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(TriGamma.MODID);
 
-    public static final DeferredBlock<Block> INSULATION_BLOCK = registerBlock("insulation_block",
+    public static final DeferredBlock<Block> TITANIUM_BLOCK = registerBlock("titanium_block",
             () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(5.5F, 7.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)));
+
+    public static final DeferredBlock<RotatedPillarBlock> INSULATION_BLOCK = ModBlocks.<RotatedPillarBlock>registerBlock("insulation_block",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
                     .strength(1.0F, 0.9F)
                     .sound(SoundType.WOOL)
                     .mapColor(MapColor.COLOR_BLACK)));

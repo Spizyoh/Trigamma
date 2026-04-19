@@ -1,3 +1,6 @@
 {
-  "item.trigamma.coal_powder": "Coal Powder"
+  "item.trigamma.coal_powder": "Coal Powder",
+  "item.trigamma.copper_coil": "Copper Coil",
+
+  "block.trigamma.insulation_block": "Roll of Insulation"
 }

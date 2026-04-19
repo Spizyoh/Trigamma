@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "texture": {
-    "all": "trigamma:block/insulator_block_side"
-  }
-}

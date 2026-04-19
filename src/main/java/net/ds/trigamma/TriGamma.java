@@ -1,5 +1,6 @@
 package net.ds.trigamma;
 
+import net.ds.trigamma.block.ModBlocks;
 import net.ds.trigamma.item.ModItems;
 import org.slf4j.Logger;
 
@@ -43,6 +44,7 @@ public class TriGamma {
         NeoForge.EVENT_BUS.register(this);
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 
@@ -58,6 +60,11 @@ public class TriGamma {
         //The creative tab im pretty sure
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.COAL_POWDER);
+            event.accept(ModItems.COPPER_COIL);
+        }
+
+        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(ModBlocks.INSULATION_BLOCK);
         }
     }
 

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "texture": {
-    "end": "trigamma:block/insulator_block_top",
-    "side": "trigamma:block/insulator_block_side"
-  }
-}
