@@ -1,0 +1,18 @@
+{
+  "type": "crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "trigamma:raw_lead"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BBB",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "trigamma:raw_lead_block"
+  }
+}
