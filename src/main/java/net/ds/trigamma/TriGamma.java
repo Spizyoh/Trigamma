@@ -58,6 +58,7 @@ public class TriGamma {
         //The creative tab im pretty sure
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.COAL_POWDER);
+            event.accept(ModItems.COPPER_COIL);
         }
     }
 
