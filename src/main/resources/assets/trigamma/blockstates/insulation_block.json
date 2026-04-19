@@ -1,17 +1,7 @@
 {
   "variants": {
-    "axis=y": {
-      "model": "trigamma:block/insulation_block"
-    },
-    "axis=z": {
-      "model": "trigamma:block/insulation_block_horizontal"
-    },
-    "axis=x": {
-      "model": "trigamma:block/insulation_block_horizontal",
-      "y": 90
-    },
-    "axis=none": {
-      "model": "trigamma:block/insulation_block_all"
-    }
+    "axis=x": { "model": "trigamma:block/insulation_block", "x": 90, "y": 90 },
+    "axis=y": { "model": "trigamma:block/insulation_block" },
+    "axis=z": { "model": "trigamma:block/insulation_block", "x": 90 }
   }
 }

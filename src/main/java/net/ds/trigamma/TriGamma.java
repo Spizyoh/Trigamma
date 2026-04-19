@@ -65,6 +65,7 @@ public class TriGamma {
 
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(ModBlocks.INSULATION_BLOCK);
+            event.accept(ModBlocks.TITANIUM_BLOCK);
         }
     }
 
