@@ -12,6 +12,8 @@ public class ModItems {
 
     public static final DeferredItem<Item> COAL_POWDER = ITEMS.register("coal_powder",
             () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COPPER_COIL = ITEMS.register("copper_coil",
+            () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
