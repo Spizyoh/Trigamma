@@ -26,6 +26,26 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
                     .mapColor(MapColor.COLOR_LIGHT_GRAY)));
 
+    public static final DeferredBlock<Block> LEAD_ORE = registerBlock("lead_ore",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(4.0F, 4.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .mapColor(MapColor.COLOR_BLUE)));
+
+    public static final DeferredBlock<Block> DEEPSLATE_LEAD_ORE = registerBlock("deepslate_lead_ore",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(6.5F, 4.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.DEEPSLATE)
+                    .mapColor(MapColor.COLOR_BLUE)));
+    public static final DeferredBlock<Block> RAW_LEAD_BLOCK = registerBlock("raw_lead_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(7F, 7.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .mapColor(MapColor.COLOR_BLUE)));
+
     public static final DeferredBlock<RotatedPillarBlock> INSULATION_BLOCK = ModBlocks.<RotatedPillarBlock>registerBlock("insulation_block",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
                     .strength(1.0F, 0.9F)

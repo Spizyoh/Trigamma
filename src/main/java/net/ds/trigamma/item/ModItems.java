@@ -10,6 +10,8 @@ public class ModItems {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TriGamma.MODID);
 
+    public static final DeferredItem<Item> RAW_LEAD = ITEMS.register("raw_lead",
+            () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COAL_POWDER = ITEMS.register("coal_powder",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COPPER_COIL = ITEMS.register("copper_coil",

@@ -1,6 +1,7 @@
 package net.ds.trigamma.item;
 
 import net.ds.trigamma.TriGamma;
+import net.ds.trigamma.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,16 +22,22 @@ public class ModCreativeModeTabs {
                     .icon(() -> new ItemStack(ModItems.COAL_POWDER.get()))
                     .title(Component.translatable("creativetab.trigamma.trigamma_items"))
                     .displayItems((itemDisplayParameters, output) -> {
+                        output.accept(ModItems.RAW_LEAD);
                         output.accept(ModItems.COAL_POWDER);
+                        output.accept(ModItems.COPPER_COIL);
                     })
                     .build());
     public static final Supplier<CreativeModeTab> TRIGAMMA_BLOCKS_TAB = CREATIVE_MODE_TAB.register("trigamma_blocks_tab",
             () -> CreativeModeTab.builder()
                     .withTabsBefore(ResourceLocation.fromNamespaceAndPath(TriGamma.MODID, "trigamma_items_tab"))
-                    .icon(() -> new ItemStack(ModItems.COAL_POWDER.get()))
+                    .icon(() -> new ItemStack(ModBlocks.TITANIUM_BLOCK.get()))
                     .title(Component.translatable("creativetab.trigamma.trigamma_blocks"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.COAL_POWDER);
+                        output.accept(ModBlocks.LEAD_ORE);
+                        output.accept(ModBlocks.RAW_LEAD_BLOCK);
+                        output.accept(ModBlocks.DEEPSLATE_LEAD_ORE);
+                        output.accept(ModBlocks.INSULATION_BLOCK);
+                        output.accept(ModBlocks.TITANIUM_BLOCK);
                     })
                     .build());
 

@@ -1,6 +1,7 @@
 package net.ds.trigamma;
 
 import net.ds.trigamma.block.ModBlocks;
+import net.ds.trigamma.item.ModCreativeModeTabs;
 import net.ds.trigamma.item.ModItems;
 import org.slf4j.Logger;
 
@@ -43,6 +44,7 @@ public class TriGamma {
 
         NeoForge.EVENT_BUS.register(this);
 
+        ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
@@ -58,14 +60,6 @@ public class TriGamma {
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         //The creative tab im pretty sure
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.COAL_POWDER);
-            event.accept(ModItems.COPPER_COIL);
-        }
-
-        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(ModBlocks.INSULATION_BLOCK);
-        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

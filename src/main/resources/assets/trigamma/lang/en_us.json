@@ -1,6 +1,15 @@
 {
   "item.trigamma.coal_powder": "Coal Powder",
   "item.trigamma.copper_coil": "Copper Coil",
+  "item.trigamma.raw_lead": "Raw Lead",
 
-  "block.trigamma.insulation_block": "Roll of Insulation"
+  "block.trigamma.lead_ore": "Lead Ore",
+  "block.trigamma.raw_lead_block": "Block of Raw Lead",
+  "block.trigamma.deepslate_lead_ore": "Deepslate Lead Ore",
+  "block.trigamma.insulation_block": "Roll of Insulation",
+  "block.trigamma.titanium_block": "Block of Titanium",
+
+  "creativetab.trigamma.trigamma_items": "Trigamma Items",
+  "creativetab.trigamma.trigamma_blocks": "Trigamma Blocks"
+
 }
