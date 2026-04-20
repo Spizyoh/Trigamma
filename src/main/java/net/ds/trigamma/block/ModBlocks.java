@@ -21,7 +21,7 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> TITANIUM_BLOCK = registerBlock("titanium_block",
             () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(5.5F, 7.0F)
+                    .strength(5.0F, 4.5F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
                     .mapColor(MapColor.COLOR_LIGHT_GRAY)));
@@ -31,6 +31,13 @@ public class ModBlocks {
                     .strength(1.0F, 0.9F)
                     .sound(SoundType.WOOL)
                     .mapColor(MapColor.COLOR_BLACK)));
+
+    public static final DeferredBlock<Block> NATURAL_URANIUM_BLOCK = registerBlock("natural_uranium_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(6.0F, 4.5F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

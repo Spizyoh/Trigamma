@@ -1,6 +1,6 @@
 package net.ds.trigamma.item;
 
-import net.ds.trigamma.radiation.RadiationSyncPacket.ClientRadiationData;
+import net.ds.trigamma.client.ClientRadiationData;
 import net.ds.trigamma.sound.ModSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -22,7 +22,7 @@ public class GeigerCounterItem extends Item {
     private static final int MAX_CLICK_INTERVAL = 80;  // 4 seconds = rare background clicks
 
     /** Radiation level (effective dose) at which the counter maxes out its click rate. */
-    private static final float MAX_RADS_FOR_SCALE = 600f;
+    private static final float MAX_RADS_FOR_SCALE = 300f;
 
     public GeigerCounterItem(Properties properties) {
         super(properties);

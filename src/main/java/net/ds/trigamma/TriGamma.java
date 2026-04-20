@@ -1,11 +1,14 @@
 package net.ds.trigamma;
 
 import net.ds.trigamma.block.ModBlocks;
+import net.ds.trigamma.client.ClientPayloadHandler;
+import net.ds.trigamma.command.EntityRadCommand;
 import net.ds.trigamma.item.ModItems;
-import net.ds.trigamma.radiation.RadiationCapability;
-import net.ds.trigamma.radiation.RadiationEvents;
-import net.ds.trigamma.radiation.RadiationSyncPacket;
+import net.ds.trigamma.item.RadioactiveItem;
+import net.ds.trigamma.radiation.*;
 import net.ds.trigamma.sound.ModSounds;
+import net.minecraft.world.item.*;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
@@ -16,10 +19,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -61,6 +60,7 @@ public class TriGamma {
 
         // ── Radiation: Game events (server tick, clone, etc.) ─────────────────
         NeoForge.EVENT_BUS.register(new RadiationEvents());
+        NeoForge.EVENT_BUS.register(new RadiationItemEvents());
 
         modEventBus.addListener(this::addCreative);
 
@@ -70,16 +70,29 @@ public class TriGamma {
     private static void registerPackets(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(MODID).versioned("1.0");
 
-        // Server → Client: sync radiation values for HUD
         registrar.playToClient(
                 RadiationSyncPacket.TYPE,
                 RadiationSyncPacket.STREAM_CODEC,
-                RadiationSyncPacket::handle
+                ClientPayloadHandler::handleData // Direct link to client-only code
         );
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
         //something goes here i think
+
+        // Vanilla Radioactive Items
+        RadioactiveItemRegistry.register(Items.ANCIENT_DEBRIS, 1f);
+        RadioactiveItemRegistry.register(Items.GLOWSTONE_DUST, 0.025f);
+
+        // Radioactive Items from other Mods
+
+        // Modded Radioactive Items
+        RadioactiveItemRegistry.register(ModBlocks.NATURAL_URANIUM_BLOCK.asItem(), 1.25f);
+    }
+
+    @SubscribeEvent
+    public void onRegisterCommands(RegisterCommandsEvent event) {
+        EntityRadCommand.register(event.getDispatcher());
     }
 
     // Add the example block item to the building blocks tab
@@ -97,6 +110,7 @@ public class TriGamma {
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(ModBlocks.INSULATION_BLOCK);
             event.accept(ModBlocks.TITANIUM_BLOCK);
+            event.accept(ModBlocks.NATURAL_URANIUM_BLOCK);
         }
     }
 

@@ -1,6 +1,7 @@
 package net.ds.trigamma;
 
 import net.ds.trigamma.client.RadiationHudOverlay;
+import net.ds.trigamma.client.RadiationItemTooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -26,6 +27,7 @@ public class    TriGammaClient {
         // Do not forget to add translations for your config options to the en_us.json file.
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         // Use the MOD event bus to register the UI layer
+        NeoForge.EVENT_BUS.register(new RadiationItemTooltip());
         modEventBus.addListener(this::registerGuiLayers);
     }
 

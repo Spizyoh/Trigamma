@@ -4,5 +4,6 @@
   "item.trigamma.geiger_counter": "Geiger Counter",
 
   "block.trigamma.insulation_block": "Roll of Insulation",
-  "block.trigamma.titanium_block": "Block of Titanium"
+  "block.trigamma.titanium_block": "Block of Titanium",
+  "block.trigamma.natural_uranium_block": "Block of Uranium"
 }

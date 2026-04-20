@@ -75,6 +75,10 @@ public class RadiationCapability {
     public void wash() {
         externalRads = Math.max(0, externalRads - 50f);
     }
+    public void cleanse() {
+        externalRads = 0f;
+        internalRads = 0f;
+    }
 
     // ── Convenience static accessors ─────────────────────────────────────────
     public static RadiationCapability get(Player player) {

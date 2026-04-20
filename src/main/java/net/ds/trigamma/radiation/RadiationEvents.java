@@ -1,6 +1,7 @@
 package net.ds.trigamma.radiation;
 
 import net.ds.trigamma.TriGamma;
+import net.ds.trigamma.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -40,7 +41,7 @@ public class RadiationEvents {
     private static final int RAY_COUNT = 32;
 
     /** Maximum distance (blocks) a radiation ray travels. */
-    private static final float RAY_DISTANCE = 16f;
+    private static final float RAY_DISTANCE = 64f;
 
     /** Rad dose absorbed per second when fully exposed to chunk radiation. */
     private static final float EXPOSURE_SCALE = 0.1f;
@@ -93,7 +94,6 @@ public class RadiationEvents {
         Vec3 origin = player.getEyePosition();
         float totalRads = 0f;
 
-        // Golden-angle Fibonacci sphere for uniform ray distribution
         double goldenAngle = Math.PI * (3.0 - Math.sqrt(5.0));
 
         for (int i = 0; i < RAY_COUNT; i++) {
@@ -109,6 +109,7 @@ public class RadiationEvents {
 
             Vec3 end = origin.add(dir.scale(RAY_DISTANCE));
 
+            // Use ClipContext.Block.VISUAL or COLLIDER
             BlockHitResult hit = player.level().clip(new ClipContext(
                     origin, end,
                     ClipContext.Block.COLLIDER,
@@ -120,22 +121,27 @@ public class RadiationEvents {
                 BlockPos hitPos = hit.getBlockPos();
                 BlockState state = player.level().getBlockState(hitPos);
                 float blockRads = getBlockRadiation(state);
+
                 if (blockRads > 0) {
-                    float dist = (float) hit.getLocation().distanceTo(origin);
-                    // Inverse-square falloff, minimum 1 to avoid division by zero
-                    float attenuated = blockRads / Math.max(1f, dist * dist * 0.1f);
+                    double dist = hit.getLocation().distanceTo(origin);
+                    // Improved Inverse Square: Intensity = Source / (4 * PI * r^2)
+                    // We'll simplify for game balance:
+                    float attenuated = blockRads / (float)Math.max(1.0, (dist * dist));
                     totalRads += attenuated;
                 }
             }
         }
 
-        // Also factor in chunk-level background radiation
+        // 1. Average the ray results
+        float finalEnvRads = totalRads;
+
+        // 2. Add chunk background radiation
         if (player.level() instanceof ServerLevel serverLevel) {
             RadiationManager mgr = RadiationManager.get(serverLevel);
-            totalRads += mgr.getRadiation(player.blockPosition()) * 0.01f;
+            finalEnvRads += mgr.getRadiation(player.blockPosition()) * 0.01f;
         }
 
-        return totalRads / RAY_COUNT * RAY_COUNT; // normalise across ray count
+        return finalEnvRads;
     }
 
     /**
@@ -144,11 +150,10 @@ public class RadiationEvents {
      */
     private float getBlockRadiation(BlockState state) {
         // ── Built-in vanilla blocks ──
-        if (state.is(Blocks.ANCIENT_DEBRIS))    return 15f;
-        if (state.is(Blocks.NETHER_GOLD_ORE))   return 5f;
+        if (state.is(Blocks.ANCIENT_DEBRIS)) return 1f;
 
         // ── Your mod blocks ──
-        // if (state.is(ModBlocks.URANIUM_ORE.get()))  return 80f;
+        if (state.is(ModBlocks.NATURAL_URANIUM_BLOCK.get()))  return 1.25f;
         // if (state.is(ModBlocks.REACTOR_CORE.get())) return 500f;
 
         return 0f;
@@ -171,7 +176,7 @@ public class RadiationEvents {
         if (dose >= THRESHOLD_DAMAGE) {
             // Radiation sickness: direct health damage every tick cycle
             DamageSource radiationDmg = player.level().damageSources().magic();
-            float dmgAmount = (dose - THRESHOLD_DAMAGE) / 1000f; // scales with severity
+            float dmgAmount = (dose - THRESHOLD_DAMAGE) / 250f; // scales with severity
             player.hurt(radiationDmg, Math.min(dmgAmount, 4f)); // cap at 2 hearts/s
         }
 

@@ -1,7 +1,6 @@
 package net.ds.trigamma.client;
 
 import net.ds.trigamma.item.GeigerCounterItem;
-import net.ds.trigamma.radiation.RadiationSyncPacket.ClientRadiationData;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -71,8 +70,8 @@ public class RadiationHudOverlay {
 
         y += BAR_HEIGHT + 4;
         String breakdown = String.format("EXT:%.0f  INT:%.0f",
-                ClientRadiationData.externalRads,
-                ClientRadiationData.internalRads);
+                ClientRadiationData.getExternalRads(),
+                ClientRadiationData.getInternalRads());
         gfx.drawString(mc.font, breakdown, x, y, 0xFF_BB_BB_BB, false);
     }
 
