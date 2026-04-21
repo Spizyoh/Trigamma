@@ -2,6 +2,8 @@ package net.ds.trigamma;
 
 import net.ds.trigamma.client.RadiationHudOverlay;
 import net.ds.trigamma.client.RadiationItemTooltip;
+import net.ds.trigamma.particle.ModParticles;
+import net.ds.trigamma.particle.VomitParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -12,6 +14,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
@@ -38,6 +41,12 @@ public class    TriGammaClient {
                     RadiationHudOverlay.renderRadiation(gfx, partialTick);
                 }
         );
+    }
+
+    @SubscribeEvent
+    public static void registerParticles(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ModParticles.VOMIT.get(),       VomitParticle.GreenProvider::new);
+        event.registerSpriteSet(ModParticles.BLOOD_VOMIT.get(), VomitParticle.RedProvider::new);
     }
 
     @SubscribeEvent

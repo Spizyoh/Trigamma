@@ -5,6 +5,7 @@ import net.ds.trigamma.client.ClientPayloadHandler;
 import net.ds.trigamma.command.EntityRadCommand;
 import net.ds.trigamma.item.ModItems;
 import net.ds.trigamma.item.RadioactiveItem;
+import net.ds.trigamma.particle.ModParticles;
 import net.ds.trigamma.radiation.*;
 import net.ds.trigamma.sound.ModSounds;
 import net.minecraft.world.item.*;
@@ -51,8 +52,10 @@ public class TriGamma {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModSounds.register(modEventBus);
+        ModParticles.PARTICLE_TYPES.register(modEventBus);
 
         // ── Radiation: DataAttachment types ──────────────────────────────────
+        MobRadiationCapability.MOB_RADIATION.getClass(); // force static init
         RadiationCapability.ATTACHMENT_TYPES.register(modEventBus);
 
         // ── Radiation: Network packets ────────────────────────────────────────
@@ -61,6 +64,9 @@ public class TriGamma {
         // ── Radiation: Game events (server tick, clone, etc.) ─────────────────
         NeoForge.EVENT_BUS.register(new RadiationEvents());
         NeoForge.EVENT_BUS.register(new RadiationItemEvents());
+        NeoForge.EVENT_BUS.register(new RadiationMobEvents());
+
+        NeoForge.EVENT_BUS.register(new VomitEvents());
 
         modEventBus.addListener(this::addCreative);
 
