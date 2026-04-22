@@ -52,19 +52,16 @@ public class RadiationMobEvents {
      * Fewer rays than players for performance — mobs can be numerous.
      * 12 rays gives a good approximation without being expensive.
      */
-    private static final int RAY_COUNT = 12;
-
-    /** Max ray distance in blocks — shorter than player range intentionally. */
-    private static final float RAY_DISTANCE = 48f;
+    private static final int SCAN_RADIUS = 12;
 
     /** How much environmental rads translate to absorbed dose per second. */
-    private static final float EXPOSURE_SCALE = 0.08f;
+    private static final float EXPOSURE_SCALE = 0.15f;
 
     // ── Effect thresholds (absorbed dose in rads) ─────────────────────────────
     private static final float THRESHOLD_SLOWNESS  = 100f;
     private static final float THRESHOLD_WEAKNESS  = 250f;
     private static final float THRESHOLD_DAMAGE    = 500f;
-    private static final float THRESHOLD_GLOWING   = 800f;
+    private static final float THRESHOLD_GLOWING   = 650f;
 
     // ── Event handler ─────────────────────────────────────────────────────────
 
@@ -90,7 +87,7 @@ public class RadiationMobEvents {
         cap.tick();
 
         // 2. Sample environmental radiation
-        float envRads = sampleEnvironmentalRadiation(entity);
+        float envRads = sampleRadiationByBlockScan(entity);
 
         // 3. Accumulate absorbed dose
         if (envRads > 0f) {
@@ -131,47 +128,36 @@ public class RadiationMobEvents {
         return false;
     }
 
-    // ── Environmental radiation sampling ──────────────────────────────────────
+    // ── Block-radius radiation scan ───────────────────────────────────────────
 
     /**
-     * Fibonacci-sphere raycast around the entity's eye position.
-     * Mirrors the player sampling in RadiationEvents but uses fewer rays.
+     * Iterates every block within SCAN_RADIUS of the entity's feet position
+     * and accumulates radiation using inverse-square distance falloff.
+     *
+     * This is more reliable than raycasting for mobs because:
+     *   - Radioactive blocks are always found regardless of what's between them
+     *     and the mob (matching real radiation behaviour — gamma rays penetrate walls)
+     *   - No ray can "miss" a block by terminating against an adjacent surface first
+     *
+     * Chunk background radiation from RadiationManager is also added.
      */
-    private float sampleEnvironmentalRadiation(LivingEntity entity) {
-        Vec3 origin = entity.getEyePosition();
+    private float sampleRadiationByBlockScan(LivingEntity entity) {
+        BlockPos center = entity.blockPosition();
         float totalRads = 0f;
 
-        double goldenAngle = Math.PI * (3.0 - Math.sqrt(5.0));
+        for (int dx = -SCAN_RADIUS; dx <= SCAN_RADIUS; dx++) {
+            for (int dy = -SCAN_RADIUS; dy <= SCAN_RADIUS; dy++) {
+                for (int dz = -SCAN_RADIUS; dz <= SCAN_RADIUS; dz++) {
+                    BlockPos pos = center.offset(dx, dy, dz);
+                    BlockState state = entity.level().getBlockState(pos);
+                    float blockRads = getBlockRadiation(state);
 
-        for (int i = 0; i < RAY_COUNT; i++) {
-            double y      = 1.0 - (i / (double)(RAY_COUNT - 1)) * 2.0;
-            double radius = Math.sqrt(1.0 - y * y);
-            double theta  = goldenAngle * i;
-
-            Vec3 dir = new Vec3(
-                    Math.cos(theta) * radius,
-                    y,
-                    Math.sin(theta) * radius
-            ).normalize();
-
-            Vec3 end = origin.add(dir.scale(RAY_DISTANCE));
-
-            BlockHitResult hit = entity.level().clip(new ClipContext(
-                    origin, end,
-                    ClipContext.Block.COLLIDER,
-                    ClipContext.Fluid.NONE,
-                    entity
-            ));
-
-            if (hit.getType() == HitResult.Type.BLOCK) {
-                BlockPos hitPos = hit.getBlockPos();
-                BlockState state = entity.level().getBlockState(hitPos);
-                float blockRads = getBlockRadiation(state);
-
-                if (blockRads > 0f) {
-                    double dist = hit.getLocation().distanceTo(origin);
-                    float attenuated = blockRads / (float) Math.max(1.0, dist * dist);
-                    totalRads += attenuated;
+                    if (blockRads > 0f) {
+                        double distSq = dx * dx + dy * dy + dz * dz;
+                        // Inverse-square falloff; clamp denominator to 1 so adjacent
+                        // blocks (dist < 1) don't produce absurd values
+                        totalRads += blockRads / (float) Math.max(1.0, distSq);
+                    }
                 }
             }
         }
@@ -179,19 +165,19 @@ public class RadiationMobEvents {
         // Add chunk background radiation
         if (entity.level() instanceof ServerLevel serverLevel) {
             RadiationManager mgr = RadiationManager.get(serverLevel);
-            totalRads += mgr.getRadiation(entity.blockPosition()) * 0.01f;
+            totalRads += mgr.getRadiation(center) * 0.01f;
         }
 
         return totalRads;
     }
 
     /**
-     * Returns radiation emission (rads/s) for a block.
+     * Radiation emission (rads) per block type.
      * Keep in sync with RadiationEvents#getBlockRadiation.
      */
     private float getBlockRadiation(BlockState state) {
-        if (state.is(Blocks.ANCIENT_DEBRIS))                          return 1f;
-        if (state.is(ModBlocks.NATURAL_URANIUM_BLOCK.get()))          return 1.25f;
+        if (state.is(Blocks.ANCIENT_DEBRIS))               return 1f;
+        if (state.is(ModBlocks.NATURAL_URANIUM_BLOCK.get())) return 1.25f;
         return 0f;
     }
 
