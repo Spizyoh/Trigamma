@@ -25,6 +25,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RAW_LEAD);
                         output.accept(ModItems.COAL_POWDER);
                         output.accept(ModItems.COPPER_COIL);
+                        output.accept(ModItems.GEIGER_COUNTER);
                     })
                     .build());
     public static final Supplier<CreativeModeTab> TRIGAMMA_BLOCKS_TAB = CREATIVE_MODE_TAB.register("trigamma_blocks_tab",
@@ -38,6 +39,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.DEEPSLATE_LEAD_ORE);
                         output.accept(ModBlocks.INSULATION_BLOCK);
                         output.accept(ModBlocks.TITANIUM_BLOCK);
+                        output.accept(ModBlocks.NATURAL_URANIUM_BLOCK);
                     })
                     .build());
 

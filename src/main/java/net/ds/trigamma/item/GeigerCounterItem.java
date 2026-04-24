@@ -14,7 +14,7 @@ import net.minecraft.sounds.SoundSource;
 
 import java.util.List;
 
-public class GeigerCounterItem extends Item {
+public class    GeigerCounterItem extends Item {
 
     /** How many ticks between the fastest possible click (at max radiation). */
     private static final int MIN_CLICK_INTERVAL = 2;   // 2 ticks  = very rapid
