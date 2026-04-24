@@ -1,0 +1,6 @@
+{
+  "geiger_click": {
+    "subtitle": "sounds.trigamma.geiger_click",
+    "sounds": ["trigamma:geiger_click"]
+  }
+}
