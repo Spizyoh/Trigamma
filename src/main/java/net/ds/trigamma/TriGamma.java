@@ -1,6 +1,7 @@
 package net.ds.trigamma;
 
 import net.ds.trigamma.block.ModBlocks;
+import net.ds.trigamma.inventory.ModMenus;
 import net.ds.trigamma.item.ModCreativeModeTabs;
 import net.ds.trigamma.client.ClientPayloadHandler;
 import net.ds.trigamma.command.EntityRadCommand;
@@ -59,6 +60,8 @@ public class TriGamma {
         ModBlocks.register(modEventBus);
         ModSounds.register(modEventBus);
         ModParticles.PARTICLE_TYPES.register(modEventBus);
+
+        ModMenus.register(modEventBus);
 
         // ── Radiation: DataAttachment types ──────────────────────────────────
         MobRadiationCapability.MOB_RADIATION.getClass(); // force static init

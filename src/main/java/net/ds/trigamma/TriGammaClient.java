@@ -2,6 +2,8 @@ package net.ds.trigamma;
 
 import net.ds.trigamma.client.RadiationHudOverlay;
 import net.ds.trigamma.client.RadiationItemTooltip;
+import net.ds.trigamma.client.gui.CustomAnvilScreen;
+import net.ds.trigamma.inventory.ModMenus;
 import net.ds.trigamma.particle.ModParticles;
 import net.ds.trigamma.particle.VomitParticle;
 import net.minecraft.client.Minecraft;
@@ -14,6 +16,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -47,6 +50,11 @@ public class    TriGammaClient {
     public static void registerParticles(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.VOMIT.get(),       VomitParticle.GreenProvider::new);
         event.registerSpriteSet(ModParticles.BLOOD_VOMIT.get(), VomitParticle.RedProvider::new);
+    }
+
+    @SubscribeEvent
+    public static void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenus.CUSTOM_ANVIL_MENU.get(), CustomAnvilScreen::new);
     }
 
     @SubscribeEvent

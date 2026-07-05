@@ -59,6 +59,13 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
                     .mapColor(MapColor.COLOR_LIGHT_GRAY)));
 
+    public static final DeferredBlock<CustomAnvilBlock> T1_ANVIL = registerBlock("t1_anvil",
+            () -> new CustomAnvilBlock(BlockBehaviour.Properties.of()
+                    .strength(5.0F, 1200.0F) // High blast resistance like a vanilla anvil
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.ANVIL)
+                    .mapColor(MapColor.METAL)));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
