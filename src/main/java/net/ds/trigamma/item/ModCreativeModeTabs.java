@@ -24,6 +24,7 @@ public class ModCreativeModeTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.RAW_LEAD);
                         output.accept(ModItems.COAL_POWDER);
+                        output.accept(ModItems.COPPER_WIRE);
                         output.accept(ModItems.COPPER_COIL);
                         output.accept(ModItems.GEIGER_COUNTER);
                     })

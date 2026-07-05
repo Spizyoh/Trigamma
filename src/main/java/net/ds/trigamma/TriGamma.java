@@ -1,6 +1,7 @@
 package net.ds.trigamma;
 
 import net.ds.trigamma.block.ModBlocks;
+import net.ds.trigamma.data.CraftingRecipeProvider;
 import net.ds.trigamma.inventory.ModMenus;
 import net.ds.trigamma.item.ModCreativeModeTabs;
 import net.ds.trigamma.client.ClientPayloadHandler;
@@ -11,6 +12,7 @@ import net.ds.trigamma.particle.ModParticles;
 import net.ds.trigamma.radiation.*;
 import net.ds.trigamma.sound.ModSounds;
 import net.minecraft.world.item.*;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -67,7 +69,7 @@ public class TriGamma {
         MobRadiationCapability.MOB_RADIATION.getClass(); // force static init
         RadiationCapability.ATTACHMENT_TYPES.register(modEventBus);
 
-        // ── Radiation: Network packets ────────────────────────────────────────
+        // ── Network packets ────────────────────────────────────────
         modEventBus.addListener(TriGamma::registerPackets);
 
         // ── Radiation: Game events (server tick, clone, etc.) ─────────────────
@@ -90,6 +92,13 @@ public class TriGamma {
                 RadiationSyncPacket.STREAM_CODEC,
                 ClientPayloadHandler::handleData // Direct link to client-only code
         );
+
+        // 2. Add our new Anvil Crafting packet right here! (Client -> Server)
+        registrar.playToServer(
+                net.ds.trigamma.network.CraftAnvilPayload.TYPE,
+                net.ds.trigamma.network.CraftAnvilPayload.CODEC,
+                net.ds.trigamma.network.CraftAnvilPayload::handleServer
+        );
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -108,6 +117,16 @@ public class TriGamma {
     @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {
         EntityRadCommand.register(event.getDispatcher());
+    }
+
+    // Keep it non-static so it doesn't cause instance registration issues!
+    private void gatherData(GatherDataEvent event) {
+        var generator = event.getGenerator();
+
+        generator.addProvider(
+                event.includeServer(),
+                new CraftingRecipeProvider(generator.getPackOutput(), event.getLookupProvider())
+        );
     }
 
     // Add the example block item to the building blocks tab
