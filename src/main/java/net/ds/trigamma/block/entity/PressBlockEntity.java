@@ -51,12 +51,12 @@ public class PressBlockEntity extends BlockEntity {
         if (level == null || level.isClientSide) return;
 
         if (!outputStack.isEmpty()) {
-            player.displayClientMessage(Component.translatable("message.metalpress.press_full"), true);
+            player.displayClientMessage(Component.translatable("message.trigamma.metalpress.press_full"), true);
             return;
         }
 
         if (ingotStack.isEmpty() || stampStack.isEmpty()) {
-            player.displayClientMessage(Component.translatable("message.metalpress.needs_ingot_and_stamp"), true);
+            player.displayClientMessage(Component.translatable("message.trigamma.metalpress.needs_ingot_and_stamp"), true);
             return;
         }
 
@@ -66,12 +66,12 @@ public class PressBlockEntity extends BlockEntity {
                 .map(holder -> holder.value());
 
         if (recipe.isEmpty()) {
-            player.displayClientMessage(Component.translatable("message.metalpress.no_recipe"), true);
+            player.displayClientMessage(Component.translatable("message.trigamma.metalpress.no_recipe"), true);
             return;
         }
 
         if (player.getFoodData().getFoodLevel() <= MIN_FOOD_LEVEL && !player.isCreative()) {
-            player.displayClientMessage(Component.translatable("message.metalpress.too_hungry"), true);
+            player.displayClientMessage(Component.translatable("message.trigamma.metalpress.too_hungry"), true);
             return;
         }
 
@@ -120,15 +120,20 @@ public class PressBlockEntity extends BlockEntity {
     public boolean insertItem(ItemStack heldStack, Player player) {
         if (level == null || level.isClientSide) return true;
 
+        if (heldStack.isEmpty()) {
+            return false;
+        }
+
         if (heldStack.getItem() instanceof StampItem) {
             return insertStamp(heldStack, player);
         }
+
         return insertIngot(heldStack, player);
     }
 
     private boolean insertStamp(ItemStack heldStack, Player player) {
         if (!stampStack.isEmpty()) {
-            player.displayClientMessage(Component.translatable("message.metalpress.stamp_installed"), true);
+            player.displayClientMessage(Component.translatable("message.trigamma.metalpress.stamp_installed"), true);
             return false;
         }
         stampStack = heldStack.split(1);
@@ -139,13 +144,18 @@ public class PressBlockEntity extends BlockEntity {
 
     private boolean insertIngot(ItemStack heldStack, Player player) {
         if (!ingotStack.isEmpty()) {
+            player.displayClientMessage(Component.literal(
+                    "Ingot slot has: " + ingotStack.getHoverName().getString()
+                            + ", held: " + heldStack.getHoverName().getString()
+            ), false);
+
             if (!ItemStack.isSameItemSameComponents(ingotStack, heldStack)) {
-                player.displayClientMessage(Component.translatable("message.metalpress.different_ingot"), true);
+                player.displayClientMessage(Component.translatable("message.trigamma.metalpress.different_ingot"), true);
                 return false;
             }
             int space = ingotStack.getMaxStackSize() - ingotStack.getCount();
             if (space <= 0) {
-                player.displayClientMessage(Component.translatable("message.metalpress.ingot_full"), true);
+                player.displayClientMessage(Component.translatable("message.trigamma.metalpress.ingot_full"), true);
                 return false;
             }
             int moved = Math.min(space, heldStack.getCount());
@@ -171,30 +181,49 @@ public class PressBlockEntity extends BlockEntity {
         if (!outputStack.isEmpty()) {
             giveOrDrop(player, outputStack);
             outputStack = ItemStack.EMPTY;
-            setChanged();
-            syncToClient();
-            return;
-        }
-
-        if (sneaking && !stampStack.isEmpty()) {
+        } else if (!stampStack.isEmpty()) {
             giveOrDrop(player, stampStack);
             stampStack = ItemStack.EMPTY;
-            setChanged();
-            syncToClient();
+        } else if (!ingotStack.isEmpty()) {
+            giveOrDrop(player, ingotStack);
+            ingotStack = ItemStack.EMPTY;
+        } else {
             return;
         }
 
-        if (sneaking && !ingotStack.isEmpty()) {
-            giveOrDrop(player, ingotStack);
-            ingotStack = ItemStack.EMPTY;
-            setChanged();
-            syncToClient();
-        }
+        setChanged();
+        syncToClient();
     }
 
     private void giveOrDrop(Player player, ItemStack stack) {
         if (!player.getInventory().add(stack.copy())) {
             player.drop(stack.copy(), false);
+        }
+    }
+
+    public void dropContents() {
+        if (level == null || level.isClientSide) return;
+
+        dropStack(ingotStack);
+        dropStack(stampStack);
+        dropStack(outputStack);
+
+        ingotStack = ItemStack.EMPTY;
+        stampStack = ItemStack.EMPTY;
+        outputStack = ItemStack.EMPTY;
+
+        setChanged();
+    }
+
+    private void dropStack(ItemStack stack) {
+        if (!stack.isEmpty()) {
+            net.minecraft.world.Containers.dropItemStack(
+                    level,
+                    worldPosition.getX() + 0.5,
+                    worldPosition.getY() + 0.5,
+                    worldPosition.getZ() + 0.5,
+                    stack.copy()
+            );
         }
     }
 

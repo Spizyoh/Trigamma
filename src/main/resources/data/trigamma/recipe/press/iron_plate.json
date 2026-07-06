@@ -1,11 +1,11 @@
 {
-  "type": "metalpress:pressing",
+  "type": "trigamma:pressing",
   "ingot": {
     "item": "minecraft:iron_ingot"
   },
   "stamp_type": "plate",
   "result": {
-    "id": "metalpress:iron_plate",
+    "id": "minecraft:iron_block",
     "count": 1
   }
 }

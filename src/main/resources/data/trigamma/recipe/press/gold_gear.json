@@ -1,11 +1,11 @@
 {
-  "type": "metalpress:pressing",
+  "type": "trigamma:pressing",
   "ingot": {
     "item": "minecraft:gold_ingot"
   },
   "stamp_type": "gear",
   "result": {
-    "id": "metalpress:gold_gear",
+    "id": "trigamma:coal_powder",
     "count": 1
   }
 }

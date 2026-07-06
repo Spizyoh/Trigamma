@@ -4,6 +4,7 @@ import net.ds.trigamma.block.ModBlockEntities;
 import net.ds.trigamma.block.ModBlocks;
 import net.ds.trigamma.data.CraftingRecipeProvider;
 import net.ds.trigamma.inventory.ModMenus;
+import net.ds.trigamma.inventory.recipes.ModRecipes;
 import net.ds.trigamma.item.ModCreativeModeTabs;
 import net.ds.trigamma.client.ClientPayloadHandler;
 import net.ds.trigamma.command.EntityRadCommand;
@@ -62,6 +63,7 @@ public class TriGamma {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModSounds.register(modEventBus);
+        ModRecipes.register(modEventBus);
         ModParticles.PARTICLE_TYPES.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 

@@ -105,6 +105,18 @@ public class PressBlock extends BaseEntityBlock {
         return state;
     }
 
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock()) && state.getValue(PART) == PressPart.LOWER) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof PressBlockEntity press) {
+                press.dropContents();
+            }
+        }
+
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
     // -----------------------------------------------------------------
     // Interaction routing
     // -----------------------------------------------------------------
@@ -124,10 +136,19 @@ public class PressBlock extends BaseEntityBlock {
 
     @Override
     protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-                                                                   BlockPos pos, Player player, InteractionHand hand,
-                                                                   BlockHitResult hit) {
+                                                                  BlockPos pos, Player player, InteractionHand hand,
+                                                                  BlockHitResult hit) {
         PressBlockEntity be = getPressBE(level, pos, state);
         if (be == null) return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+
+        if (stack.isEmpty()) {
+            if (state.getValue(PART) == PressPart.UPPER) {
+                be.crank(player);
+            } else {
+                be.tryExtract(player, player.isShiftKeyDown());
+            }
+            return net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
 
         if (state.getValue(PART) == PressPart.UPPER) {
             be.crank(player);

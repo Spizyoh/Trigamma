@@ -17,7 +17,14 @@
   "block.trigamma.t1_anvil": "Crude Engineer's Anvil",
 
   "creativetab.trigamma.trigamma_items": "Trigamma Items",
-  "creativetab.trigamma.trigamma_blocks": "Trigamma Blocks"
+  "creativetab.trigamma.trigamma_blocks": "Trigamma Blocks",
 
+  "message.trigamma.metalpress.press_full": "Manual Press is Full!",
+  "message.trigamma.metalpress.needs_ingot_and_stamp": "Press requires an ingot and a stamp!",
+  "message.trigamma.metalpress.no_recipe": "No valid recipe!",
+  "message.trigamma.metalpress.too_hungry": "Too hungry to crank!",
+  "message.trigamma.metalpress.stamp_installed": "Stamp is already installed!",
+  "message.trigamma.metalpress.different_ingot": "There's already a different ingot in the Press!",
+  "message.trigamma.metalpress.ingot_full": "Ingot slot is full!"
 
 }
