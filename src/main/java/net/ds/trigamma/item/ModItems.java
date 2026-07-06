@@ -19,6 +19,15 @@ public class ModItems {
     public static final DeferredItem<Item> COPPER_WIRE = ITEMS.register("copper_wire",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<StampItem> PLATE_STAMP = ITEMS.register("plate_stamp",
+            () -> new StampItem(StampType.PLATE, new Item.Properties().durability(64)));
+
+    public static final DeferredItem<StampItem> WIRE_STAMP = ITEMS.register("wire_stamp",
+            () -> new StampItem(StampType.WIRE, new Item.Properties().durability(64)));
+
+    public static final DeferredItem<StampItem> GEAR_STAMP = ITEMS.register("gear_stamp",
+            () -> new StampItem(StampType.GEAR, new Item.Properties().durability(64)));
+
     public static final DeferredItem<Item> GEIGER_COUNTER = ITEMS.register("geiger_counter",
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
 

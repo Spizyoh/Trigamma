@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "part=lower,stage=0": { "model": "trigamma:block/metalworking_press_lower_stage0" },
+    "part=lower,stage=1": { "model": "trigamma:block/metalworking_press_lower_stage1" },
+    "part=lower,stage=2": { "model": "trigamma:block/metalworking_press_lower_stage2" },
+    "part=lower,stage=3": { "model": "trigamma:block/metalworking_press_lower_stage3" },
+    "part=lower,stage=4": { "model": "trigamma:block/metalworking_press_lower_stage4" },
+    "part=upper,stage=0": { "model": "trigamma:block/metalworking_press_upper_stage0" },
+    "part=upper,stage=1": { "model": "trigamma:block/metalworking_press_upper_stage1" },
+    "part=upper,stage=2": { "model": "trigamma:block/metalworking_press_upper_stage2" },
+    "part=upper,stage=3": { "model": "trigamma:block/metalworking_press_upper_stage3" },
+    "part=upper,stage=4": { "model": "trigamma:block/metalworking_press_upper_stage4" }
+  }
+}

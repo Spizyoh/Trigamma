@@ -1,0 +1,13 @@
+{
+  "loader": "neoforge:obj",
+  "model": "trigamma:models/block/machines/metalworking_press_lower.obj",
+  "mtl_override": "trigamma:models/block/mtls/metalworking_press_lower.mtl",
+  "textures": {
+    "texture0": "trigamma:block/metalworking_press_lower",
+    "particle": "minecraft:block/stone"
+  },
+  "automatic_culling": false,
+  "shade_quads": false,
+  "flip_v": true,
+  "emissive_ambient": false
+}

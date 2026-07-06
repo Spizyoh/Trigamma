@@ -1,0 +1,11 @@
+{
+  "type": "metalpress:pressing",
+  "ingot": {
+    "item": "minecraft:copper_ingot"
+  },
+  "stamp_type": "wire",
+  "result": {
+    "id": "metalpress:copper_wire",
+    "count": 2
+  }
+}

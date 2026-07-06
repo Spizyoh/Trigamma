@@ -3,6 +3,9 @@
   "item.trigamma.copper_coil": "Copper Coil",
   "item.trigamma.raw_lead": "Raw Lead",
   "item.trigamma.copper_wire": "Copper Wire",
+  "item.trigamma.wire_stamp": "Iron Wire Stamp",
+  "item.trigamma.plate_stamp": "Iron Plate Stamp",
+  "item.trigamma.gear_stamp": "Iron Gear Stamp",
   "item.trigamma.geiger_counter": "Geiger Counter",
 
   "block.trigamma.lead_ore": "Lead Ore",

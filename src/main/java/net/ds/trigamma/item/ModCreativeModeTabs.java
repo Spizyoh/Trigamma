@@ -27,6 +27,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.COPPER_WIRE);
                         output.accept(ModItems.COPPER_COIL);
                         output.accept(ModItems.GEIGER_COUNTER);
+                        output.accept(ModItems.PLATE_STAMP);
+                        output.accept(ModItems.WIRE_STAMP);
+                        output.accept(ModItems.GEAR_STAMP);
                     })
                     .build());
     public static final Supplier<CreativeModeTab> TRIGAMMA_BLOCKS_TAB = CREATIVE_MODE_TAB.register("trigamma_blocks_tab",
@@ -41,6 +44,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.INSULATION_BLOCK);
                         output.accept(ModBlocks.TITANIUM_BLOCK);
                         output.accept(ModBlocks.NATURAL_URANIUM_BLOCK);
+                        output.accept(ModBlocks.T1_ANVIL);
+                        output.accept(ModBlocks.METALWORKING_PRESS);
                     })
                     .build());
 

@@ -1,0 +1,14 @@
+{
+  "loader": "neoforge:obj",
+  "model": "trigamma:models/block/machines/metalworking_press_upper_stage2.obj",
+  "mtl_override": "trigamma:models/block/mtls/metalworking_press_upper_stage2.mtl",
+  "textures": {
+    "texture0": "trigamma:block/metalworking_press_hammer",
+    "texture1": "trigamma:block/metalworking_press_crank",
+    "particle": "minecraft:block/stone"
+  },
+  "automatic_culling": false,
+  "shade_quads": false,
+  "flip_v": true,
+  "emissive_ambient": false
+}

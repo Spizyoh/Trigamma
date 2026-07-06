@@ -66,6 +66,13 @@ public class ModBlocks {
                     .sound(SoundType.ANVIL)
                     .mapColor(MapColor.METAL)));
 
+    public static final DeferredBlock<PressBlock> METALWORKING_PRESS = registerBlock("metalworking_press",
+            () -> new PressBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(4.0F, 6.0F)
+                    .sound(SoundType.ANVIL)
+                    .noOcclusion()));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
