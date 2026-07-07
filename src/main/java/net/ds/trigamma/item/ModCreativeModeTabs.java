@@ -26,6 +26,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.COAL_POWDER);
                         output.accept(ModItems.COPPER_WIRE);
                         output.accept(ModItems.COPPER_COIL);
+                        output.accept(ModItems.GOLD_GEAR);
+                        output.accept(ModItems.IRON_PLATE);
+                        output.accept(ModItems.CHROMIUM_INGOT);
                         output.accept(ModItems.GEIGER_COUNTER);
                         output.accept(ModItems.PLATE_STAMP);
                         output.accept(ModItems.WIRE_STAMP);
