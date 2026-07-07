@@ -43,6 +43,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.DEEPSLATE_LEAD_ORE);
                         output.accept(ModBlocks.INSULATION_BLOCK);
                         output.accept(ModBlocks.TITANIUM_BLOCK);
+                        output.accept(ModBlocks.TITANIUM_ORE);
                         output.accept(ModBlocks.NATURAL_URANIUM_BLOCK);
                         output.accept(ModBlocks.T1_ANVIL);
                         output.accept(ModBlocks.METALWORKING_PRESS);

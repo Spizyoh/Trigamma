@@ -1,8 +1,10 @@
 package net.ds.trigamma;
 
+import net.ds.trigamma.block.ModBlockEntities;
 import net.ds.trigamma.client.RadiationHudOverlay;
 import net.ds.trigamma.client.RadiationItemTooltip;
 import net.ds.trigamma.client.gui.CustomAnvilScreen;
+import net.ds.trigamma.client.render.PressBlockEntityRenderer;
 import net.ds.trigamma.inventory.ModMenus;
 import net.ds.trigamma.particle.ModParticles;
 import net.ds.trigamma.particle.VomitParticle;
@@ -15,6 +17,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
@@ -50,6 +53,11 @@ public class    TriGammaClient {
     public static void registerParticles(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.VOMIT.get(),       VomitParticle.GreenProvider::new);
         event.registerSpriteSet(ModParticles.BLOOD_VOMIT.get(), VomitParticle.RedProvider::new);
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModBlockEntities.PRESS.get(), PressBlockEntityRenderer::new);
     }
 
     @SubscribeEvent

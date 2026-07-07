@@ -171,6 +171,18 @@ public class PressBlockEntity extends BlockEntity {
         return true;
     }
 
+    public ItemStack getIngotStack() {
+        return this.ingotStack;
+    }
+
+    public ItemStack getStampStack() {
+        return this.stampStack;
+    }
+
+    public ItemStack getOutputStack() {
+        return this.outputStack;
+    }
+
     /**
      * Right-clicked the lower half with an empty hand.
      * Takes the output if present, otherwise (if sneaking) returns the stamp.

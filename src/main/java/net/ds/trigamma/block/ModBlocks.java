@@ -52,6 +52,13 @@ public class ModBlocks {
                     .sound(SoundType.WOOL)
                     .mapColor(MapColor.COLOR_BLACK)));
 
+    public static final DeferredBlock<Block> TITANIUM_ORE = registerBlock("titanium_ore",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(4.0F, 4.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)));
+
     public static final DeferredBlock<Block> NATURAL_URANIUM_BLOCK = registerBlock("natural_uranium_block",
             () -> new Block(BlockBehaviour.Properties.of()
                     .strength(6.0F, 4.5F)

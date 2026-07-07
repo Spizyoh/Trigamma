@@ -14,7 +14,9 @@
   "block.trigamma.insulation_block": "Roll of Insulation",
   "block.trigamma.titanium_block": "Block of Titanium",
   "block.trigamma.natural_uranium_block": "Block of Uranium",
+  "block.trigamma.titanium_ore": "Titanium Ore",
   "block.trigamma.t1_anvil": "Crude Engineer's Anvil",
+  "block.trigamma.metalworking_press": "Manual Metalworking Press",
 
   "creativetab.trigamma.trigamma_items": "Trigamma Items",
   "creativetab.trigamma.trigamma_blocks": "Trigamma Blocks",
