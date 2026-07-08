@@ -43,6 +43,8 @@
   "message.trigamma.metalpress.too_hungry": "Too hungry to crank!",
   "message.trigamma.metalpress.stamp_installed": "Stamp is already installed!",
   "message.trigamma.metalpress.different_ingot": "There's already a different ingot in the Press!",
-  "message.trigamma.metalpress.ingot_full": "Ingot slot is full!"
+  "message.trigamma.metalpress.ingot_full": "Ingot slot is full!",
 
+  "category.trigamma.anvil_recipe.mixed_iron_block": "Mixed Iron Block",
+  "category.trigamma.anvil_recipe.forged_copper_coil": "Forged Copper Coil"
 }

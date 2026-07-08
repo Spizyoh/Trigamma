@@ -1,6 +1,7 @@
 package net.ds.trigamma.block;
 
 import net.ds.trigamma.TriGamma;
+import net.ds.trigamma.inventory.recipes.AnvilTier;
 import net.ds.trigamma.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
@@ -71,7 +72,7 @@ public class ModBlocks {
                     .strength(5.0F, 1200.0F) // High blast resistance like a vanilla anvil
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.ANVIL)
-                    .mapColor(MapColor.METAL)));
+                    .mapColor(MapColor.METAL), AnvilTier.T1));
 
     public static final DeferredBlock<PressBlock> METALWORKING_PRESS = registerBlock("metalworking_press",
             () -> new PressBlock(BlockBehaviour.Properties.of()

@@ -1,6 +1,7 @@
 package net.ds.trigamma.network;
 
 import net.ds.trigamma.TriGamma;
+import net.ds.trigamma.inventory.gui.CustomAnvilMenu;
 import net.ds.trigamma.inventory.recipes.AnvilRecipe;
 import net.ds.trigamma.inventory.recipes.ModAnvilRecipes;
 import net.minecraft.network.FriendlyByteBuf;
@@ -10,6 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+
+import java.util.List;
 
 public record CraftAnvilPayload(String recipeId) implements CustomPacketPayload {
 
@@ -39,15 +42,27 @@ public record CraftAnvilPayload(String recipeId) implements CustomPacketPayload 
                         .orElse(null);
 
                 if (matchedRecipe != null && hasAllIngredients(player, matchedRecipe)) {
+                    if (!(player.containerMenu instanceof CustomAnvilMenu anvilMenu)) {
+                        return;
+                    }
+
+                    if (!anvilMenu.getAnvilTier().canCraft(matchedRecipe.requiredTier())) {
+                        return;
+                    }
+
+
                     // 1. Consume the materials out of the user's pockets
                     for (AnvilRecipe.IngredientCost ingredient : matchedRecipe.ingredients()) {
                         shrinkPlayerItem(player, ingredient.item(), ingredient.count());
                     }
 
                     // 2. Add the freshly crafted product to the user's inventory
-                    ItemStack outputClone = matchedRecipe.output().copy();
-                    if (!player.getInventory().add(outputClone)) {
-                        player.drop(outputClone, false); // Drop it at their feet if inventory is full
+                    for (ItemStack output : matchedRecipe.outputs()) {
+                        ItemStack outputClone = output.copy();
+
+                        if (!player.getInventory().add(outputClone) && !outputClone.isEmpty()) {
+                            player.drop(outputClone, false);
+                        }
                     }
                 }
             }
@@ -58,7 +73,7 @@ public record CraftAnvilPayload(String recipeId) implements CustomPacketPayload 
         for (AnvilRecipe.IngredientCost ingredient : recipe.ingredients()) {
             int currentCount = 0;
             for (ItemStack stack : player.getInventory().items) {
-                if (!stack.isEmpty() && ItemStack.isSameItem(stack, ingredient.item())) {
+                if (!stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, ingredient.item())) {
                     currentCount += stack.getCount();
                 }
             }

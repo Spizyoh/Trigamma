@@ -13,7 +13,8 @@ public class ModAnvilRecipes {
         // Example Recipe 1: Crafting an Iron Block
         RECIPES.add(new AnvilRecipe(
                 "mixed_iron_block",
-                new ItemStack(Items.IRON_BLOCK, 1),
+                AnvilTier.T2,
+                List.of(new ItemStack(Items.IRON_BLOCK, 1)),
                 List.of(
                         new AnvilRecipe.IngredientCost(new ItemStack(Items.IRON_INGOT), 6),
                         new AnvilRecipe.IngredientCost(new ItemStack(Items.COPPER_INGOT), 3)
@@ -22,7 +23,8 @@ public class ModAnvilRecipes {
 
         RECIPES.add(new AnvilRecipe(
                 "forged_copper_coil",
-                new ItemStack(ModItems.COPPER_COIL.get(), 1),
+                AnvilTier.T1,
+                List.of(new ItemStack(ModItems.COPPER_COIL.get(), 1)),
                 List.of(
                         new AnvilRecipe.IngredientCost(new ItemStack(Items.IRON_INGOT), 1),
                         new AnvilRecipe.IngredientCost(new ItemStack(ModItems.COPPER_WIRE.get()), 2)

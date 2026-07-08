@@ -3,12 +3,14 @@ package net.ds.trigamma.client.gui;
 import net.ds.trigamma.TriGamma;
 import net.ds.trigamma.inventory.gui.CustomAnvilMenu;
 import net.ds.trigamma.inventory.recipes.AnvilRecipe;
+import net.ds.trigamma.inventory.recipes.AnvilTier;
 import net.ds.trigamma.inventory.recipes.ModAnvilRecipes;
 import net.ds.trigamma.network.CraftAnvilPayload;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -37,7 +39,7 @@ public class CustomAnvilScreen extends AbstractContainerScreen<CustomAnvilMenu> 
         super(menu, playerInventory, title);
         this.imageWidth = 256;
         this.imageHeight = 220;
-        this.filteredRecipes = ModAnvilRecipes.RECIPES;
+        this.filteredRecipes = List.of();
     }
 
     @Override
@@ -58,14 +60,19 @@ public class CustomAnvilScreen extends AbstractContainerScreen<CustomAnvilMenu> 
                 .build();
         this.addRenderableWidget(this.craftButton);
         this.craftButton.active = false; // Disabled until a recipe is chosen
+
+        this.updateFilteredRecipes();
     }
 
     private void updateFilteredRecipes() {
+        String query = currentSearch.toLowerCase();
+        AnvilTier currentTier = this.menu.getAnvilTier();
+
         this.filteredRecipes = ModAnvilRecipes.RECIPES.stream()
-                .filter(recipe -> recipe.matchesSearch(currentSearch))
+                .filter(recipe -> currentTier.canCraft(recipe.requiredTier()))
+                .filter(recipe -> query.isEmpty() || I18n.get(recipe.translationKey()).toLowerCase().contains(query))
                 .collect(Collectors.toList());
 
-        // Reset selection if it gets filtered out
         if (selectedRecipe != null && !filteredRecipes.contains(selectedRecipe)) {
             selectedRecipe = null;
             this.craftButton.active = false;
@@ -126,8 +133,15 @@ public class CustomAnvilScreen extends AbstractContainerScreen<CustomAnvilMenu> 
             }
 
             // Draw the target item output icon and name
-            graphics.renderFakeItem(recipe.output(), itemX, renderY);
-            graphics.drawString(this.font, recipe.output().getHoverName(), itemX + 22, renderY + 4, 0x404040, false);
+            graphics.renderFakeItem(recipe.previewOutput(), itemX, renderY);
+            graphics.drawString(
+                    this.font,
+                    Component.translatable(recipe.translationKey()),
+                    itemX + 22,
+                    renderY + 4,
+                    0x404040,
+                    false
+            );
             renderY += 20;
         }
 
@@ -146,36 +160,49 @@ public class CustomAnvilScreen extends AbstractContainerScreen<CustomAnvilMenu> 
     }
 
     private void renderMaterialCostPanel(GuiGraphics graphics) {
-        // Draw the standalone Blue Material Costs Side Panel attached to the right edge
         int panelX = this.leftPos + this.imageWidth;
         int panelY = this.topPos;
-        int panelWidth = 120;
-        int panelHeight = 100;
+        int panelWidth = 140;
+        int panelHeight = 150;
 
-        // Draw basic panel borders and background
-        graphics.fill(panelX, panelY, panelX + panelWidth, panelY + panelHeight, 0xFF0D1B2A); // Dark navy blue background
-        graphics.fill(panelX + 2, panelY + 2, panelX + panelWidth - 2, panelY + panelHeight - 2, 0xFF1B263B); // Internal panel fill
+        graphics.fill(panelX, panelY, panelX + panelWidth, panelY + panelHeight, 0xFF0D1B2A);
+        graphics.fill(panelX + 2, panelY + 2, panelX + panelWidth - 2, panelY + panelHeight - 2, 0xFF1B263B);
 
-        // Draw header text
-        graphics.drawString(this.font, "Material Costs:", panelX + 8, panelY + 8, 0x3A86FF, false);
+        if (selectedRecipe == null) {
+            graphics.drawString(this.font, "No recipe selected", panelX + 8, panelY + 12, 0x8D99AE, false);
+            return;
+        }
 
-        if (selectedRecipe != null) {
-            int costY = panelY + 26;
-            for (AnvilRecipe.IngredientCost ingredient : selectedRecipe.ingredients()) {
-                String displayName = ingredient.item().getHoverName().getString();
-                String formattedText = displayName + " x" + ingredient.count();
+        graphics.drawString(this.font, Component.translatable(selectedRecipe.translationKey()), panelX + 8, panelY + 8, 0x3A86FF, false);
 
-                // Format check: Does player have enough materials?
-                boolean hasEnough = hasPlayerMaterials(ingredient.item(), ingredient.count());
-                int textColor = hasEnough ? 0x00FF00 : 0xFF4D4D; // Green if owned, red if missing
+        int outputY = panelY + 26;
+        graphics.drawString(this.font, "Outputs:", panelX + 8, outputY, 0x8DCAF0, false);
+        outputY += 14;
 
-                // Render item miniature icon next to text requirement
-                graphics.renderFakeItem(ingredient.item(), panelX + 8, costY - 4);
-                graphics.drawString(this.font, formattedText, panelX + 28, costY, textColor, false);
-                costY += 18;
-            }
-        } else {
-            graphics.drawString(this.font, "No recipe selected", panelX + 8, panelY + 26, 0x8D99AE, false);
+        for (ItemStack output : selectedRecipe.outputs()) {
+            String formattedText = output.getHoverName().getString() + " x" + output.getCount();
+
+            graphics.renderFakeItem(output, panelX + 8, outputY - 4);
+            graphics.drawString(this.font, formattedText, panelX + 28, outputY, 0xE0E1DD, false);
+
+            outputY += 18;
+        }
+
+        int costY = outputY + 8;
+        graphics.drawString(this.font, "Material Costs:", panelX + 8, costY, 0x3A86FF, false);
+        costY += 18;
+
+        for (AnvilRecipe.IngredientCost ingredient : selectedRecipe.ingredients()) {
+            String displayName = ingredient.item().getHoverName().getString();
+            String formattedText = displayName + " x" + ingredient.count();
+
+            boolean hasEnough = hasPlayerMaterials(ingredient.item(), ingredient.count());
+            int textColor = hasEnough ? 0x00FF00 : 0xFF4D4D;
+
+            graphics.renderFakeItem(ingredient.item(), panelX + 8, costY - 4);
+            graphics.drawString(this.font, formattedText, panelX + 28, costY, textColor, false);
+
+            costY += 18;
         }
     }
 

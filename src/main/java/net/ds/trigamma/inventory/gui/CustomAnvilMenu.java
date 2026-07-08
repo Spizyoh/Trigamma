@@ -1,5 +1,6 @@
 package net.ds.trigamma.inventory.gui;
 import net.ds.trigamma.inventory.ModMenus;
+import net.ds.trigamma.inventory.recipes.AnvilTier;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -9,21 +10,25 @@ import net.minecraft.world.item.ItemStack;
 
 public class CustomAnvilMenu extends AbstractContainerMenu {
     private final Inventory playerInventory;
+    private final AnvilTier anvilTier;
 
-    // Client-side constructor
     public CustomAnvilMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf buffer) {
-        this(containerId, playerInventory);
+        this(containerId, playerInventory, buffer.readEnum(AnvilTier.class));
     }
 
-    // Server-side constructor
-    public CustomAnvilMenu(int containerId, Inventory playerInventory) {
-        super(ModMenus.CUSTOM_ANVIL_MENU.get(), containerId); // .get() now works safely!
+    public CustomAnvilMenu(int containerId, Inventory playerInventory, AnvilTier anvilTier) {
+        super(ModMenus.CUSTOM_ANVIL_MENU.get(), containerId);
         this.playerInventory = playerInventory;
+        this.anvilTier = anvilTier;
+    }
+
+    public AnvilTier getAnvilTier() {
+        return anvilTier;
     }
 
     @Override
     public ItemStack quickMoveStack(Player player, int slotIndex) {
-        return ItemStack.EMPTY; // No specific slots to shift-click into
+        return ItemStack.EMPTY;
     }
 
     @Override
