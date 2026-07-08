@@ -67,6 +67,13 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
                     .mapColor(MapColor.COLOR_LIGHT_GRAY)));
 
+    public static final DeferredBlock<Block> UNIVERSAL_MATTER_DUCT = registerBlock("universal_matter_duct",
+            () -> new UniversalMatterDuctBlock(BlockBehaviour.Properties.of()
+                    .strength(2.5F, 4.0F)
+                    .sound(SoundType.METAL)
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .noOcclusion()));
+
     public static final DeferredBlock<CustomAnvilBlock> T1_ANVIL = registerBlock("t1_anvil",
             () -> new CustomAnvilBlock(BlockBehaviour.Properties.of()
                     .strength(5.0F, 1200.0F) // High blast resistance like a vanilla anvil

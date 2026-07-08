@@ -67,6 +67,9 @@ public class ModItems {
     public static final DeferredItem<Item> GEIGER_COUNTER = ITEMS.register("geiger_counter",
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
 
+    public static final DeferredItem<Item> IDENTIFIER_TABLET = ITEMS.register("identifier_tablet",
+            () -> new IdentifierTabletItem(new Item.Properties().stacksTo(1)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

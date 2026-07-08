@@ -2,8 +2,10 @@ package net.ds.trigamma;
 
 import net.ds.trigamma.block.ModBlockEntities;
 import net.ds.trigamma.block.ModBlocks;
+import net.ds.trigamma.block.entity.UniversalMatterDuctBlockEntity;
 import net.ds.trigamma.data.CraftingRecipeProvider;
 import net.ds.trigamma.inventory.ModMenus;
+import net.ds.trigamma.inventory.fluid.MatterCapabilities;
 import net.ds.trigamma.inventory.recipes.ModRecipes;
 import net.ds.trigamma.item.ModCreativeModeTabs;
 import net.ds.trigamma.client.ClientPayloadHandler;
@@ -14,6 +16,7 @@ import net.ds.trigamma.particle.ModParticles;
 import net.ds.trigamma.radiation.*;
 import net.ds.trigamma.sound.ModSounds;
 import net.minecraft.world.item.*;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -65,7 +68,9 @@ public class TriGamma {
         ModSounds.register(modEventBus);
         ModRecipes.register(modEventBus);
         ModParticles.PARTICLE_TYPES.register(modEventBus);
-        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+
+        modEventBus.addListener(TriGamma::registerCapabilities);
 
         ModMenus.register(modEventBus);
 
@@ -116,6 +121,14 @@ public class TriGamma {
 
         // Modded Radioactive Items
         RadioactiveItemRegistry.register(ModBlocks.NATURAL_URANIUM_BLOCK.asItem(), 1.25f);
+    }
+
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                MatterCapabilities.MATTER_HANDLER,
+                UniversalMatterDuctBlockEntity.TYPE.get(),
+                (blockEntity, direction) -> blockEntity.getTank() // Give out our engine tank references
+        );
     }
 
     @SubscribeEvent

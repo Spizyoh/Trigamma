@@ -2,6 +2,7 @@ package net.ds.trigamma.block;
 
 import net.ds.trigamma.TriGamma;
 import net.ds.trigamma.block.entity.PressBlockEntity;
+import net.ds.trigamma.block.entity.UniversalMatterDuctBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -17,6 +18,13 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("metalworking_press",
                     () -> BlockEntityType.Builder.of(PressBlockEntity::new, ModBlocks.METALWORKING_PRESS.get())
                             .build(null));
+
+    // Register the block entity type and assign it directly to the field in your BE class
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<UniversalMatterDuctBlockEntity>> UNIVERSAL_MATTER_DUCT =
+            BLOCK_ENTITIES.register("universal_matter_duct", () ->
+                    BlockEntityType.Builder.of(UniversalMatterDuctBlockEntity::new,
+                            ModBlocks.UNIVERSAL_MATTER_DUCT.get()).build(null)
+            );
 
     public static void register(IEventBus modBus) {
         BLOCK_ENTITIES.register(modBus);

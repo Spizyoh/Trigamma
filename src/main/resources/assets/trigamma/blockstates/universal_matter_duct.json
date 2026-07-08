@@ -1,0 +1,31 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "trigamma:block/universal_matter_duct_core" }
+    },
+    {
+      "when": { "north": "true" },
+      "apply": { "model": "trigamma:block/universal_matter_duct_side" }
+    },
+    {
+      "when": { "south": "true" },
+      "apply": { "model": "trigamma:block/universal_matter_duct_side", "y": 180 }
+    },
+    {
+      "when": { "east": "true" },
+      "apply": { "model": "trigamma:block/universal_matter_duct_side", "y": 90 }
+    },
+    {
+      "when": { "west": "true" },
+      "apply": { "model": "trigamma:block/universal_matter_duct_side", "y": 270 }
+    },
+    {
+      "when": { "up": "true" },
+      "apply": { "model": "trigamma:block/universal_matter_duct_side", "x": 270 }
+    },
+    {
+      "when": { "down": "true" },
+      "apply": { "model": "trigamma:block/universal_matter_duct_side", "x": 90 }
+    }
+  ]
+}

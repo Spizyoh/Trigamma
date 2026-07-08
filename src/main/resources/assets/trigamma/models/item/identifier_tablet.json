@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "trigamma:item/identifier_tablet_frame",
+    "layer1": "trigamma:item/tablet_droplet"
+  }
+}
