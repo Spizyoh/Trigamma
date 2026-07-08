@@ -23,12 +23,30 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.trigamma.trigamma_items"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.RAW_LEAD);
+
                         output.accept(ModItems.COAL_POWDER);
+
                         output.accept(ModItems.COPPER_WIRE);
                         output.accept(ModItems.COPPER_COIL);
                         output.accept(ModItems.GOLD_GEAR);
-                        output.accept(ModItems.IRON_PLATE);
+                        output.accept(ModItems.IRON_BOLT);
+
                         output.accept(ModItems.CHROMIUM_INGOT);
+                        output.accept(ModItems.STEEL_INGOT);
+                        output.accept(ModItems.ALUMINIUM_INGOT);
+                        output.accept(ModItems.BERYLLIUM_INGOT);
+                        output.accept(ModItems.MAGNESIUM_INGOT);
+                        output.accept(ModItems.TUNGSTEN_INGOT);
+                        output.accept(ModItems.COBALT_INGOT);
+
+                        output.accept(ModItems.STEEL_PLATE);
+                        output.accept(ModItems.ALUMINIUM_PLATE);
+                        output.accept(ModItems.BERYLLIUM_PLATE);
+                        output.accept(ModItems.MAGNESIUM_PLATE);
+                        output.accept(ModItems.TUNGSTEN_PLATE);
+                        output.accept(ModItems.COBALT_PLATE);
+                        output.accept(ModItems.IRON_PLATE);
+
                         output.accept(ModItems.GEIGER_COUNTER);
                         output.accept(ModItems.PLATE_STAMP);
                         output.accept(ModItems.WIRE_STAMP);

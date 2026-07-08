@@ -12,18 +12,47 @@ public class ModItems {
 
     public static final DeferredItem<Item> RAW_LEAD = ITEMS.register("raw_lead",
             () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<Item> COAL_POWDER = ITEMS.register("coal_powder",
             () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<Item> COPPER_COIL = ITEMS.register("copper_coil",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COPPER_WIRE = ITEMS.register("copper_wire",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> GOLD_GEAR = ITEMS.register("gold_gear",
             () -> new Item(new Item.Properties()));
-    public static final DeferredItem<Item> IRON_PLATE = ITEMS.register("iron_plate",
+    public static final DeferredItem<Item> IRON_BOLT = ITEMS.register("iron_bolt",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> STEEL_INGOT = ITEMS.register("steel_ingot",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> ALUMINIUM_INGOT = ITEMS.register("aluminium_ingot",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> BERYLLIUM_INGOT = ITEMS.register("beryllium_ingot",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> MAGNESIUM_INGOT = ITEMS.register("magnesium_ingot",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> TUNGSTEN_INGOT = ITEMS.register("tungsten_ingot",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COBALT_INGOT = ITEMS.register("cobalt_ingot",
+            () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> CHROMIUM_INGOT = ITEMS.register("chromium_ingot",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> IRON_PLATE = ITEMS.register("iron_plate",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> STEEL_PLATE = ITEMS.register("steel_plate",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> ALUMINIUM_PLATE = ITEMS.register("aluminium_plate",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> BERYLLIUM_PLATE = ITEMS.register("beryllium_plate",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> MAGNESIUM_PLATE = ITEMS.register("magnesium_plate",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> TUNGSTEN_PLATE = ITEMS.register("tungsten_plate",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COBALT_PLATE = ITEMS.register("cobalt_plate",
             () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<StampItem> PLATE_STAMP = ITEMS.register("plate_stamp",

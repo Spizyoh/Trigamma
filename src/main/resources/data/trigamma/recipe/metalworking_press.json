@@ -1,0 +1,24 @@
+{
+  "type": "crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "trigamma:iron_bolt"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "#": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "IBI",
+    "IBI",
+    "I#I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "trigamma:metalworking_press"
+  }
+}

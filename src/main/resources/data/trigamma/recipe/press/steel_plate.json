@@ -1,0 +1,11 @@
+{
+  "type": "trigamma:pressing",
+  "ingot": {
+    "item": "trigamma:steel_ingot"
+  },
+  "stamp_type": "plate",
+  "result": {
+    "id": "trigamma:steel_plate",
+    "count": 1
+  }
+}
