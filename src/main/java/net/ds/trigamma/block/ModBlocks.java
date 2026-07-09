@@ -2,6 +2,7 @@ package net.ds.trigamma.block;
 
 import net.ds.trigamma.TriGamma;
 import net.ds.trigamma.inventory.recipes.AnvilTier;
+import net.ds.trigamma.inventory.recipes.BoilerRecipeRegistry;
 import net.ds.trigamma.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
@@ -72,6 +73,20 @@ public class ModBlocks {
                     .strength(2.5F, 4.0F)
                     .sound(SoundType.METAL)
                     .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .noOcclusion()));
+
+    public static final DeferredBlock<Block> BOILER = registerBlock("boiler",
+            () -> new BoilerBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0F, 100.0F)
+                    .sound(SoundType.COPPER)
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .noOcclusion()));
+
+    public static final DeferredBlock<Block> BOILER_SHELL = registerBlock("boiler_shell",
+            () -> new BoilerBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0F, 100.0F)
+                    .sound(SoundType.COPPER)
+                    .mapColor(MapColor.COLOR_ORANGE)
                     .noOcclusion()));
 
     public static final DeferredBlock<CustomAnvilBlock> T1_ANVIL = registerBlock("t1_anvil",

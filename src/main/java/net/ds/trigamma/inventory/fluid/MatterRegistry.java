@@ -47,6 +47,13 @@ public class MatterRegistry {
             1.2f
     ));
 
+    public static final GasData STEAM = register(new GasData(
+            ResourceLocation.fromNamespaceAndPath("trigamma", "steam"),
+            Set.of(),
+            0xF0F0F0, // Ghostly White/Gray
+            1.2f
+    ));
+
     private static <T extends IMatter> T register(T matter) {
         REGISTRY.put(matter.id(), matter);
         return matter;

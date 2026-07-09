@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -154,6 +155,18 @@ public class RadiationItemEvents {
     // ── 3. Container leakage ──────────────────────────────────────────────────
 
     /**
+     * Returns a block entity only if one already exists at this position — never
+     * forces lazy construction the way {@link Level#getBlockEntity(BlockPos)} does.
+     * Safe to call in wide-radius scans without risking a race against blocks
+     * that were just placed/changed this tick.
+     */
+    private static BlockEntity getExistingBlockEntitySafe(Level level, BlockPos pos) {
+        if (!level.isLoaded(pos)) return null;
+        LevelChunk chunk = level.getChunkAt(pos);
+        return chunk.getBlockEntity(pos, LevelChunk.EntityCreationType.CHECK);
+    }
+
+    /**
      * Scans all block entities within {@link #CONTAINER_SCAN_RADIUS} that implement
      * {@link Container}. For each, totals the radioactive items inside and applies:
      *
@@ -179,7 +192,7 @@ public class RadiationItemEvents {
                             .distanceTo(checkPos.getCenter());
                     if (dist > CONTAINER_SCAN_RADIUS) continue;
 
-                    BlockEntity be = level.getBlockEntity(checkPos);
+                    BlockEntity be = getExistingBlockEntitySafe(level, checkPos);
                     if (!(be instanceof Container container)) continue;
 
                     // Determine leak factor

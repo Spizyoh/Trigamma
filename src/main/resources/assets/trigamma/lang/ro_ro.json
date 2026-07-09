@@ -44,6 +44,12 @@
 
   "gas.trigamma.radon_gas": "Radon",
   "gas.trigamma.hydrogen_gas": "Hydrogen",
+  "gas.trigamma.steam": "Abur",
+
+  "buffer.trigamma.input": "Intră",
+  "buffer.trigamma.output": "Iese",
+  "buffer.trigamma.empty": "Gol",
+  "buffer.trigamma.line": "%s: %s / %s mB (%s)",
 
   "gui.trigamma.identifier_tablet.title": "Tabletă de Identificare a Materiei",
   "gui.trigamma.identifier_tablet.tab.fluids": "Lichide",
@@ -54,6 +60,8 @@
   "message.trigamma.tablet_mode_set": "Modul Tabletei a fost setat la: %s",
   "message.trigamma.duct_configured": "Ai configurat %s țevi conectate să transporte: %s",
   "message.trigamma.duct_locked": "Țeava a fost blocată să transporte: %s",
+  "message.trigamma.boiler_recipe_set": "Rețeta Boilerului a fost configurată ca: %s",
+  "message.trigamma.boiler_no_recipe": "Nu există nicio rețetă de Boiler pentru: %s",
 
   "message.trigamma.metalpress.press_full": "Presa manuală este plină!",
   "message.trigamma.metalpress.needs_ingot_and_stamp": "Presa are nevoie de un Lingou și o Ștampilă!",

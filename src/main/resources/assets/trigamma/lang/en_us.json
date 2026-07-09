@@ -44,6 +44,12 @@
 
   "gas.trigamma.radon_gas": "Radon",
   "gas.trigamma.hydrogen_gas": "Hydrogen",
+  "gas.trigamma.steam": "Steam",
+
+  "buffer.trigamma.input": "Input",
+  "buffer.trigamma.output": "Output",
+  "buffer.trigamma.empty": "Empty",
+  "buffer.trigamma.line": "%s: %s / %s mB (%s)",
 
   "gui.trigamma.identifier_tablet.title": "Matter Identifier Tablet",
   "gui.trigamma.identifier_tablet.tab.fluids": "Fluids",
@@ -54,6 +60,9 @@
   "message.trigamma.tablet_mode_set": "Tablet Mode Set To: %s",
   "message.trigamma.duct_configured": "Configured %s connected ducts to transport: %s",
   "message.trigamma.duct_locked": "Locked duct to transport: %s",
+  "message.trigamma.boiler_recipe_set": "Boiler recipe configured for: %s",
+  "message.trigamma.boiler_no_recipe": "No boiler recipe exists for: %s",
+  "message.trigamma.boiler_no_space": "Not enough clear space to place the Boiler (needs a 3x3x4 area)!",
 
   "message.trigamma.metalpress.press_full": "Manual Press is Full!",
   "message.trigamma.metalpress.needs_ingot_and_stamp": "Press requires an ingot and a stamp!",

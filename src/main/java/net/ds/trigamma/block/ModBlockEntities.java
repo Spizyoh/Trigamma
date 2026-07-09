@@ -1,6 +1,8 @@
 package net.ds.trigamma.block;
 
 import net.ds.trigamma.TriGamma;
+import net.ds.trigamma.block.entity.BoilerBlockEntity;
+import net.ds.trigamma.block.entity.BoilerShellBlockEntity;
 import net.ds.trigamma.block.entity.PressBlockEntity;
 import net.ds.trigamma.block.entity.UniversalMatterDuctBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,11 +21,22 @@ public class ModBlockEntities {
                     () -> BlockEntityType.Builder.of(PressBlockEntity::new, ModBlocks.METALWORKING_PRESS.get())
                             .build(null));
 
-    // Register the block entity type and assign it directly to the field in your BE class
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<UniversalMatterDuctBlockEntity>> UNIVERSAL_MATTER_DUCT =
             BLOCK_ENTITIES.register("universal_matter_duct", () ->
                     BlockEntityType.Builder.of(UniversalMatterDuctBlockEntity::new,
                             ModBlocks.UNIVERSAL_MATTER_DUCT.get()).build(null)
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BoilerBlockEntity>> BOILER =
+            BLOCK_ENTITIES.register("boiler", () ->
+                    BlockEntityType.Builder.of(BoilerBlockEntity::new,
+                            ModBlocks.BOILER.get()).build(null)
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BoilerShellBlockEntity>> BOILER_SHELL =
+            BLOCK_ENTITIES.register("boiler_shell", () ->
+                    BlockEntityType.Builder.of(BoilerShellBlockEntity::new,
+                            ModBlocks.BOILER_SHELL.get()).build(null)
             );
 
     public static void register(IEventBus modBus) {

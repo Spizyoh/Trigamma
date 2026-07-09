@@ -1,0 +1,6 @@
+{
+  "parent": "trigamma:block/cube_all",
+  "textures": {
+    "0": "trigamma:block/boiler_particle"
+  }
+}

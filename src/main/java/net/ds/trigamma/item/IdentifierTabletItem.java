@@ -1,5 +1,6 @@
 package net.ds.trigamma.item;
 
+import net.ds.trigamma.block.entity.BoilerBlockEntity;
 import net.ds.trigamma.block.entity.UniversalMatterDuctBlockEntity;
 import net.ds.trigamma.client.IdentifierTabletClientHandler;
 import net.ds.trigamma.inventory.fluid.IMatter;
@@ -42,6 +43,28 @@ public class IdentifierTabletItem extends Item {
         if (player == null || level.isClientSide) return InteractionResult.SUCCESS;
 
         BlockEntity be = level.getBlockEntity(pos);
+
+        Optional<BoilerBlockEntity> boilerOpt = BoilerBlockEntity.resolve(level, pos);
+        if (boilerOpt.isPresent()) {
+            BoilerBlockEntity boiler = boilerOpt.get();
+            Optional<IMatter> selectedMatter = getSelectedMatter(stack);
+            if (selectedMatter.isEmpty()) {
+                player.sendSystemMessage(Component.translatable("message.trigamma.tablet_empty"));
+                return InteractionResult.SUCCESS;
+            }
+
+            IMatter matter = selectedMatter.get();
+            boolean success = boiler.setRecipeFromInput(matter);
+            Component matterName = Component.translatable(matter.translationKey());
+
+            if (success) {
+                player.sendSystemMessage(Component.translatable("message.trigamma.boiler_recipe_set", matterName));
+            } else {
+                player.sendSystemMessage(Component.translatable("message.trigamma.boiler_no_recipe", matterName));
+            }
+            return InteractionResult.SUCCESS;
+        }
+
         if (be instanceof UniversalMatterDuctBlockEntity duct) {
             Optional<IMatter> selectedMatter = getSelectedMatter(stack);
 
