@@ -7,9 +7,18 @@ public interface IMatter {
     ResourceLocation id();
     MatterPhase phase();
     Set<PropertyTag> tags();
-    int color(); // For pipe rendering overlay
+    int color();
 
     default boolean hasTag(PropertyTag tag) {
         return tags().contains(tag);
+    }
+
+    default String translationKey() {
+        String category = switch (phase()) {
+            case FLUID -> "fluid";
+            case GAS -> "gas";
+            case EMPTY -> "matter";
+        };
+        return category + "." + id().getNamespace() + "." + id().getPath();
     }
 }

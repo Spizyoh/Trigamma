@@ -12,6 +12,8 @@ import net.ds.trigamma.client.ClientPayloadHandler;
 import net.ds.trigamma.command.EntityRadCommand;
 import net.ds.trigamma.item.ModItems;
 import net.ds.trigamma.item.RadioactiveItem;
+import net.ds.trigamma.network.SelectMatterHandler;
+import net.ds.trigamma.network.SelectMatterPayload;
 import net.ds.trigamma.particle.ModParticles;
 import net.ds.trigamma.radiation.*;
 import net.ds.trigamma.sound.ModSounds;
@@ -107,6 +109,12 @@ public class TriGamma {
                 net.ds.trigamma.network.CraftAnvilPayload.TYPE,
                 net.ds.trigamma.network.CraftAnvilPayload.CODEC,
                 net.ds.trigamma.network.CraftAnvilPayload::handleServer
+        );
+
+        registrar.playToServer(
+                SelectMatterPayload.TYPE,
+                SelectMatterPayload.STREAM_CODEC,
+                SelectMatterHandler::handle
         );
     }
 

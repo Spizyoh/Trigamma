@@ -11,18 +11,25 @@ public class MatterRegistry {
     private static final Map<ResourceLocation, IMatter> REGISTRY = new HashMap<>();
 
     // --- Examples of Custom Liquids ---
+    public static final FluidData WATER = register(new FluidData(
+            ResourceLocation.fromNamespaceAndPath("trigamma", "water"),
+            Set.of(),
+            0x2424BF, // Soft Blue Tint
+            1000
+    ));
+
     public static final FluidData HEAVY_WATER = register(new FluidData(
             ResourceLocation.fromNamespaceAndPath("trigamma", "heavy_water"),
             Set.of(PropertyTag.COOLANT),
             0x00C1D5, // Soft Blue Tint
-            1000
+            1200
     ));
 
     public static final FluidData SULFURIC_ACID = register(new FluidData(
             ResourceLocation.fromNamespaceAndPath("trigamma", "sulfuric_acid"),
-            Set.of(PropertyTag.CORROSIVE, PropertyTag.TOXIC, PropertyTag.VISCOUS),
+            Set.of(PropertyTag.CORROSIVE, PropertyTag.TOXIC),
             0x959055, // Acid Green
-            1500
+            1000
     ));
 
     // --- Examples of Custom Gases ---

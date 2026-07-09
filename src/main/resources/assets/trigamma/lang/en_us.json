@@ -23,6 +23,7 @@
   "item.trigamma.steel_plate": "Steel Plate",
   "item.trigamma.tungsten_ingot": "Tungsten Ingot",
   "item.trigamma.tungsten_plate": "Tungsten Plate",
+  "item.trigamma.identifier_tablet": "Matter Identifier Tablet",
 
   "block.trigamma.lead_ore": "Lead Ore",
   "block.trigamma.raw_lead_block": "Block of Raw Lead",
@@ -36,6 +37,23 @@
 
   "creativetab.trigamma.trigamma_items": "Trigamma Items",
   "creativetab.trigamma.trigamma_blocks": "Trigamma Blocks",
+
+  "fluid.trigamma.water": "Water",
+  "fluid.trigamma.heavy_water": "Heavy Water",
+  "fluid.trigamma.sulfuric_acid": "Sulfuric Acid",
+
+  "gas.trigamma.radon_gas": "Radon",
+  "gas.trigamma.hydrogen_gas": "Hydrogen",
+
+  "gui.trigamma.identifier_tablet.title": "Matter Identifier Tablet",
+  "gui.trigamma.identifier_tablet.tab.fluids": "Fluids",
+  "gui.trigamma.identifier_tablet.tab.gases": "Gases",
+  "gui.trigamma.identifier_tablet.search": "Search...",
+
+  "message.trigamma.tablet_empty": "Tablet is empty! Shift-Right-Click the air or a non-pipe block to cycle matter configurations.",
+  "message.trigamma.tablet_mode_set": "Tablet Mode Set To: %s",
+  "message.trigamma.duct_configured": "Configured %s connected ducts to transport: %s",
+  "message.trigamma.duct_locked": "Locked duct to transport: %s",
 
   "message.trigamma.metalpress.press_full": "Manual Press is Full!",
   "message.trigamma.metalpress.needs_ingot_and_stamp": "Press requires an ingot and a stamp!",

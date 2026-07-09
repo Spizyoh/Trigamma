@@ -1,6 +1,7 @@
 package net.ds.trigamma.item;
 
 import net.ds.trigamma.block.entity.UniversalMatterDuctBlockEntity;
+import net.ds.trigamma.client.IdentifierTabletClientHandler;
 import net.ds.trigamma.inventory.fluid.IMatter;
 import net.ds.trigamma.inventory.fluid.MatterRegistry;
 import net.minecraft.core.BlockPos;
@@ -45,27 +46,21 @@ public class IdentifierTabletItem extends Item {
             Optional<IMatter> selectedMatter = getSelectedMatter(stack);
 
             if (selectedMatter.isEmpty()) {
-                player.sendSystemMessage(Component.literal("Tablet is empty! Shift-Right-Click the air or a non-pipe block to cycle matter configurations."));
+                player.sendSystemMessage(Component.translatable("message.trigamma.tablet_empty"));
                 return InteractionResult.SUCCESS;
             }
 
             IMatter matter = selectedMatter.get();
+            Component matterName = Component.translatable(matter.translationKey());
 
             if (player.isShiftKeyDown()) {
-                // Network-wide structural propagation (Flood Fill)
                 int updatedCount = configureNetwork(level, pos, matter);
-                player.sendSystemMessage(Component.literal("Configured " + updatedCount + " connected ducts to transport: " + matter.id().getPath()));
+                player.sendSystemMessage(Component.translatable("message.trigamma.duct_configured",
+                        updatedCount, matterName));
             } else {
-                // New code
                 duct.setFilterMatter(matter);
-
-                player.sendSystemMessage(Component.literal("Locked duct to transport: " + matter.id().getPath()));
+                player.sendSystemMessage(Component.translatable("message.trigamma.duct_locked", matterName));
             }
-            return InteractionResult.SUCCESS;
-        }
-
-        if (player.isShiftKeyDown()) {
-            cycleSelectedMatter(stack, player);
             return InteractionResult.SUCCESS;
         }
 
@@ -75,11 +70,10 @@ public class IdentifierTabletItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!level.isClientSide && player.isShiftKeyDown()) {
-            cycleSelectedMatter(stack, player);
-            return InteractionResultHolder.success(stack);
+        if (level.isClientSide) {
+            IdentifierTabletClientHandler.openScreen(hand);
         }
-        return InteractionResultHolder.pass(stack);
+        return InteractionResultHolder.success(stack);
     }
 
     private int configureNetwork(Level level, BlockPos startPos, IMatter matter) {
@@ -108,23 +102,6 @@ public class IdentifierTabletItem extends Item {
             }
         }
         return configuredCount;
-    }
-
-    // --- Modern 1.21.1 Component Mutation System ---
-    private void cycleSelectedMatter(ItemStack stack, Player player) {
-        var allMatter = MatterRegistry.getAllMatter().keySet().stream().toList();
-        if (allMatter.isEmpty()) return;
-
-        stack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, customData -> customData.update(tag -> {
-            int currentIndex = tag.contains("SelectedIndex") ? tag.getInt("SelectedIndex") : -1;
-            int nextIndex = (currentIndex + 1) % allMatter.size();
-
-            ResourceLocation selectedId = allMatter.get(nextIndex);
-            tag.putInt("SelectedIndex", nextIndex);
-            tag.putString("SelectedMatter", selectedId.toString());
-
-            player.sendSystemMessage(Component.literal("Tablet Mode Set To: " + selectedId.getPath()));
-        }));
     }
 
     public Optional<IMatter> getSelectedMatter(ItemStack stack) {
