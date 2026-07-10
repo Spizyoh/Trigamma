@@ -4,7 +4,6 @@ import net.ds.trigamma.block.ModBlockEntities;
 import net.ds.trigamma.client.RadiationHudOverlay;
 import net.ds.trigamma.client.RadiationItemTooltip;
 import net.ds.trigamma.client.gui.CustomAnvilScreen;
-import net.ds.trigamma.client.render.BoilerBlockEntityRenderer;
 import net.ds.trigamma.client.render.PressBlockEntityRenderer;
 import net.ds.trigamma.inventory.ModMenus;
 import net.ds.trigamma.item.IdentifierTabletItem;
@@ -62,7 +61,6 @@ public class    TriGammaClient {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.PRESS.get(), PressBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(ModBlockEntities.BOILER.get(), BoilerBlockEntityRenderer::new);
     }
 
     @SubscribeEvent

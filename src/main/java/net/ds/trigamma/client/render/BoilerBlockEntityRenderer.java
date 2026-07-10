@@ -12,12 +12,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.AABB;
 
+/**
+ * @deprecated The boiler now renders through its normal block model.
+ */
+@Deprecated(since = "0.0.1", forRemoval = true)
 public class BoilerBlockEntityRenderer implements BlockEntityRenderer<BoilerBlockEntity> {
 
     // Model registered separately (e.g. via a plain block/item model json, or loaded
     // as a standalone model — see note below).
     private static final ModelResourceLocation BOILER_MODEL = ModelResourceLocation.standalone(
-            ResourceLocation.fromNamespaceAndPath("trigamma", "block/boiler_multiblock")
+            ResourceLocation.fromNamespaceAndPath("trigamma", "block/boiler")
     );
 
     public BoilerBlockEntityRenderer(BlockEntityRendererProvider.Context context) {

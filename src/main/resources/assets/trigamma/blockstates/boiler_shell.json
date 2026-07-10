@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "trigamma:block/boiler_invisible" }
+    "": {
+      "model": "trigamma:block/boiler_shell"
+    }
   }
 }

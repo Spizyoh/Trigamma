@@ -25,6 +25,8 @@
   "item.trigamma.tungsten_plate": "Placă de Wolfram",
   "item.trigamma.identifier_tablet": "Tabletă de Identificare a Materiei",
 
+  "block.trigamma.universal_matter_duct": "Țeavă Universală de Materie",
+  "block.trigamma.boiler": "Boiler",
   "block.trigamma.lead_ore": "Minereu de Plumb",
   "block.trigamma.raw_lead_block": "Bloc de Plumb Brut",
   "block.trigamma.deepslate_lead_ore": "Minereu de Plumb din Adânc",
@@ -62,6 +64,7 @@
   "message.trigamma.duct_locked": "Țeava a fost blocată să transporte: %s",
   "message.trigamma.boiler_recipe_set": "Rețeta Boilerului a fost configurată ca: %s",
   "message.trigamma.boiler_no_recipe": "Nu există nicio rețetă de Boiler pentru: %s",
+  "message.trigamma.boiler_no_space": "Nu există destul spațiu liber a amplasa boilerul (Este nevoie de un spațiu de 3x3x4)!",
 
   "message.trigamma.metalpress.press_full": "Presa manuală este plină!",
   "message.trigamma.metalpress.needs_ingot_and_stamp": "Presa are nevoie de un Lingou și o Ștampilă!",

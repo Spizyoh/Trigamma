@@ -83,7 +83,7 @@ public class ModBlocks {
                     .noOcclusion()));
 
     public static final DeferredBlock<Block> BOILER_SHELL = registerBlock("boiler_shell",
-            () -> new BoilerBlock(BlockBehaviour.Properties.of()
+            () -> new BoilerShellBlock(BlockBehaviour.Properties.of()
                     .strength(6.0F, 100.0F)
                     .sound(SoundType.COPPER)
                     .mapColor(MapColor.COLOR_ORANGE)

@@ -25,6 +25,8 @@
   "item.trigamma.tungsten_plate": "Tungsten Plate",
   "item.trigamma.identifier_tablet": "Matter Identifier Tablet",
 
+  "block.trigamma.universal_matter_duct": "Universal Matter Duct",
+  "block.trigamma.boiler": "Boiler",
   "block.trigamma.lead_ore": "Lead Ore",
   "block.trigamma.raw_lead_block": "Block of Raw Lead",
   "block.trigamma.deepslate_lead_ore": "Deepslate Lead Ore",

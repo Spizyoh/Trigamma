@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -110,7 +111,6 @@ public class BoilerBlockEntity extends BlockEntity implements IMatterBufferHolde
     public boolean tryPlaceShells(Level level, BlockPos masterPos) {
         List<BlockPos> offsets = getShellOffsets();
 
-        // First pass: verify every position is free before touching anything.
         for (BlockPos offset : offsets) {
             BlockPos target = masterPos.offset(offset);
             BlockState existing = level.getBlockState(target);
@@ -119,28 +119,37 @@ public class BoilerBlockEntity extends BlockEntity implements IMatterBufferHolde
             }
         }
 
-        // Second pass: actually place the shell blocks.
         shellOffsets.clear();
+
+        BlockState shellState = ModBlocks.BOILER_SHELL.get().defaultBlockState();
+
         for (BlockPos offset : offsets) {
             BlockPos target = masterPos.offset(offset);
-            level.setBlock(target, ModBlocks.BOILER_SHELL.get().defaultBlockState(), Block.UPDATE_ALL);
+
+            level.setBlock(target, shellState, Block.UPDATE_ALL);
+
             if (level.getBlockEntity(target) instanceof BoilerShellBlockEntity shellBe) {
                 shellBe.setMasterPos(masterPos);
+                level.sendBlockUpdated(target, shellState, shellState, Block.UPDATE_ALL);
             }
+
             shellOffsets.add(offset);
         }
+
         setChanged();
         return true;
     }
 
     public void removeShells(Level level) {
         BlockPos masterPos = this.getBlockPos();
-        for (BlockPos offset : shellOffsets) {
+
+        for (BlockPos offset : getShellOffsets()) {
             BlockPos target = masterPos.offset(offset);
             if (level.getBlockState(target).is(ModBlocks.BOILER_SHELL.get())) {
-                level.setBlock(target, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+                level.setBlock(target, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
             }
         }
+
         shellOffsets.clear();
     }
 

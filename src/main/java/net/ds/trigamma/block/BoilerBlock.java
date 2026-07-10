@@ -27,7 +27,7 @@ public class BoilerBlock extends Block implements EntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.INVISIBLE;
+        return RenderShape.MODEL;
     }
 
     @Nullable
@@ -64,17 +64,22 @@ public class BoilerBlock extends Block implements EntityBlock {
         BlockState result = super.playerWillDestroy(level, pos, state, player);
         if (level.isClientSide) return result;
 
-        if (level.getBlockEntity(pos) instanceof BoilerShellBlockEntity shell) {
-            BlockPos masterPos = shell.getMasterPos();
-            if (masterPos != null && level.getBlockEntity(masterPos) instanceof BoilerBlockEntity boiler) {
-                // Clean up all shells FIRST, while the master BE still exists and
-                // still knows its own shellOffsets. Then remove the master block itself.
+        if (level.getBlockEntity(pos) instanceof BoilerBlockEntity boiler) {
+            boiler.removeShells(level);
+        }
+
+        return result;
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            if (!level.isClientSide && level.getBlockEntity(pos) instanceof BoilerBlockEntity boiler) {
                 boiler.removeShells(level);
-                level.setBlock(masterPos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
-                popMasterDrop(level, masterPos, player);
             }
         }
-        return result;
+
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     private void popMasterDrop(Level level, BlockPos masterPos, Player player) {

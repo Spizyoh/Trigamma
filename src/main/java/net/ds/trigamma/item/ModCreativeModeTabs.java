@@ -48,6 +48,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.IRON_PLATE);
 
                         output.accept(ModItems.GEIGER_COUNTER);
+                        output.accept(ModItems.IDENTIFIER_TABLET);
                         output.accept(ModItems.PLATE_STAMP);
                         output.accept(ModItems.WIRE_STAMP);
                         output.accept(ModItems.GEAR_STAMP);
@@ -62,11 +63,16 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.LEAD_ORE);
                         output.accept(ModBlocks.RAW_LEAD_BLOCK);
                         output.accept(ModBlocks.DEEPSLATE_LEAD_ORE);
+
                         output.accept(ModBlocks.INSULATION_BLOCK);
                         output.accept(ModBlocks.TITANIUM_BLOCK);
                         output.accept(ModBlocks.TITANIUM_ORE);
+
                         output.accept(ModBlocks.NATURAL_URANIUM_BLOCK);
+
                         output.accept(ModBlocks.T1_ANVIL);
+                        output.accept(ModBlocks.UNIVERSAL_MATTER_DUCT);
+                        output.accept(ModBlocks.BOILER);
                         output.accept(ModBlocks.METALWORKING_PRESS);
                     })
                     .build());
