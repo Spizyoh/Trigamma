@@ -6,9 +6,12 @@ import net.neoforged.neoforge.capabilities.BlockCapability;
 import org.jetbrains.annotations.Nullable;
 
 public class MatterCapabilities {
-    public static final BlockCapability<PipeMatterTank, @Nullable Direction> MATTER_HANDLER =
+    // NOTE: this used to be typed to the concrete PipeMatterTank class. It's now typed to
+    // the IMatterHandler interface so that anything - pipes, machine ports, tanks - can
+    // expose this capability without being a literal PipeMatterTank.
+    public static final BlockCapability<IMatterHandler, @Nullable Direction> MATTER_HANDLER =
             BlockCapability.createSided(
                     ResourceLocation.fromNamespaceAndPath("trigamma", "matter_handler"),
-                    PipeMatterTank.class
+                    IMatterHandler.class
             );
 }

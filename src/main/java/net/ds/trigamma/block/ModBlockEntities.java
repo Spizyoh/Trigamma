@@ -1,10 +1,7 @@
 package net.ds.trigamma.block;
 
 import net.ds.trigamma.TriGamma;
-import net.ds.trigamma.block.entity.BoilerBlockEntity;
-import net.ds.trigamma.block.entity.BoilerShellBlockEntity;
-import net.ds.trigamma.block.entity.PressBlockEntity;
-import net.ds.trigamma.block.entity.UniversalMatterDuctBlockEntity;
+import net.ds.trigamma.block.entity.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -37,6 +34,12 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("boiler_shell", () ->
                     BlockEntityType.Builder.of(BoilerShellBlockEntity::new,
                             ModBlocks.BOILER_SHELL.get()).build(null)
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MachinePortBlockEntity>> MACHINE_PORT =
+            BLOCK_ENTITIES.register("machine_port", () ->
+                    BlockEntityType.Builder.of(MachinePortBlockEntity::new,
+                            ModBlocks.MACHINE_PORT.get()).build(null)
             );
 
     public static void register(IEventBus modBus) {

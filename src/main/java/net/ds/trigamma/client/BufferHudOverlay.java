@@ -41,6 +41,10 @@ public class BufferHudOverlay {
 
         int lineY = startY;
         for (IMatterBufferHolder.BufferSlot slot : holder.getDisplayBuffers()) {
+            System.out.println(
+                    "CLIENT BUFFER: " + slot.buffer().getAmount()
+            );
+
             String matterName = slot.buffer().getMatter()
                     .map(m -> Component.translatable(m.translationKey()).getString())
                     .orElse(Component.translatable("buffer.trigamma.empty").getString());

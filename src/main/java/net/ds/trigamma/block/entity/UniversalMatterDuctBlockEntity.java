@@ -1,5 +1,6 @@
 package net.ds.trigamma.block.entity;
 
+import net.ds.trigamma.inventory.fluid.IMatterHandler;
 import net.ds.trigamma.inventory.fluid.MatterCapabilities;
 import net.ds.trigamma.inventory.fluid.MatterPhase;
 import net.ds.trigamma.inventory.fluid.PipeMatterTank;
@@ -39,7 +40,9 @@ public class UniversalMatterDuctBlockEntity extends BlockEntity {
             if (duct.tank.getAmount() <= 0) break;
 
             BlockPos targetPos = pos.relative(direction);
-            PipeMatterTank neighborTank = level.getCapability(MatterCapabilities.MATTER_HANDLER, targetPos, direction.getOpposite());
+            // Neighbor can now be another duct (PipeMatterTank) OR a MachinePortBlockEntity -
+            // both implement IMatterHandler, so this works for either transparently.
+            IMatterHandler neighborTank = level.getCapability(MatterCapabilities.MATTER_HANDLER, targetPos, direction.getOpposite());
 
             if (neighborTank != null) {
                 int ourAmount = duct.tank.getAmount();
@@ -90,11 +93,23 @@ public class UniversalMatterDuctBlockEntity extends BlockEntity {
 
     private static Direction[] getDirectionPriority(MatterPhase phase) {
         if (phase == MatterPhase.GAS) {
-            // Gases go UP first, then spread horizontally, then DOWN as a last resort
-            return new Direction[]{Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST, Direction.DOWN};
+            return new Direction[]{
+                    Direction.NORTH,
+                    Direction.SOUTH,
+                    Direction.EAST,
+                    Direction.WEST,
+                    Direction.UP,
+                    Direction.DOWN
+            };
         } else {
-            // Fluids go DOWN first, then spread horizontally, then CLIMB UP as a last resort
-            return new Direction[]{Direction.DOWN, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST, Direction.UP};
+            return new Direction[]{
+                    Direction.NORTH,
+                    Direction.SOUTH,
+                    Direction.EAST,
+                    Direction.WEST,
+                    Direction.DOWN,
+                    Direction.UP
+            };
         }
     }
 
@@ -124,6 +139,7 @@ public class UniversalMatterDuctBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
+
         if (this.getFilterMatter().isPresent()) {
             tag.putString("FilterMatterId", this.getFilterMatter().get().id().toString());
         }

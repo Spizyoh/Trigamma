@@ -2,6 +2,7 @@ package net.ds.trigamma;
 
 import net.ds.trigamma.block.ModBlockEntities;
 import net.ds.trigamma.block.ModBlocks;
+import net.ds.trigamma.block.entity.MachinePortBlockEntity;
 import net.ds.trigamma.block.entity.UniversalMatterDuctBlockEntity;
 import net.ds.trigamma.data.CraftingRecipeProvider;
 import net.ds.trigamma.inventory.ModMenus;
@@ -136,6 +137,12 @@ public class TriGamma {
                 MatterCapabilities.MATTER_HANDLER,
                 UniversalMatterDuctBlockEntity.TYPE.get(),
                 (blockEntity, direction) -> blockEntity.getTank() // Give out our engine tank references
+        );
+
+        event.registerBlockEntity(
+                MatterCapabilities.MATTER_HANDLER,
+                MachinePortBlockEntity.TYPE.get(),
+                (blockEntity, direction) -> blockEntity
         );
     }
 

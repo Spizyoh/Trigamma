@@ -89,6 +89,13 @@ public class ModBlocks {
                     .mapColor(MapColor.COLOR_ORANGE)
                     .noOcclusion()));
 
+    public static final DeferredBlock<Block> MACHINE_PORT = registerBlock("machine_port",
+            () -> new MachinePortBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0F, 100.0F)
+                    .sound(SoundType.COPPER)
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .noOcclusion()));
+
     public static final DeferredBlock<CustomAnvilBlock> T1_ANVIL = registerBlock("t1_anvil",
             () -> new CustomAnvilBlock(BlockBehaviour.Properties.of()
                     .strength(5.0F, 1200.0F) // High blast resistance like a vanilla anvil
