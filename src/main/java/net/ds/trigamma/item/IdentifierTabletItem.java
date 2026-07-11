@@ -1,6 +1,7 @@
 package net.ds.trigamma.item;
 
 import net.ds.trigamma.block.entity.BoilerBlockEntity;
+import net.ds.trigamma.block.entity.TankBlockEntity;
 import net.ds.trigamma.block.entity.UniversalMatterDuctBlockEntity;
 import net.ds.trigamma.client.IdentifierTabletClientHandler;
 import net.ds.trigamma.inventory.fluid.IMatter;
@@ -62,6 +63,28 @@ public class IdentifierTabletItem extends Item {
             } else {
                 player.sendSystemMessage(Component.translatable("message.trigamma.boiler_no_recipe", matterName));
             }
+            return InteractionResult.SUCCESS;
+        }
+
+        Optional<TankBlockEntity> tankOpt = TankBlockEntity.resolve(level, pos);
+        if (tankOpt.isPresent()) {
+            TankBlockEntity tank = tankOpt.get();
+            Optional<IMatter> selectedMatter = getSelectedMatter(stack);
+
+            if (selectedMatter.isEmpty()) {
+                player.sendSystemMessage(Component.translatable("message.trigamma.tablet_empty"));
+                return InteractionResult.SUCCESS;
+            }
+
+            IMatter matter = selectedMatter.get();
+            Component matterName = Component.translatable(matter.translationKey());
+
+            if (tank.setLockedMatter(matter)) {
+                player.sendSystemMessage(Component.translatable("message.trigamma.tank_type_set", matterName));
+            } else {
+                player.sendSystemMessage(Component.translatable("message.trigamma.tank_type_blocked", matterName));
+            }
+
             return InteractionResult.SUCCESS;
         }
 

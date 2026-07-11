@@ -6,5 +6,6 @@ package net.ds.trigamma.block.port;
  */
 public enum PortIO {
     INPUT,
-    OUTPUT
+    OUTPUT,
+    BOTH
 }

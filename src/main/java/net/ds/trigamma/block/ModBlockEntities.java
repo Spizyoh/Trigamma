@@ -30,6 +30,18 @@ public class ModBlockEntities {
                             ModBlocks.BOILER.get()).build(null)
             );
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TankBlockEntity>> TANK =
+            BLOCK_ENTITIES.register("tank", () ->
+                    BlockEntityType.Builder.of(TankBlockEntity::new,
+                            ModBlocks.TANK.get()).build(null)
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TankShellBlockEntity>> TANK_SHELL =
+            BLOCK_ENTITIES.register("tank_shell", () ->
+                    BlockEntityType.Builder.of(TankShellBlockEntity::new,
+                            ModBlocks.TANK_SHELL.get()).build(null)
+            );
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BoilerShellBlockEntity>> BOILER_SHELL =
             BLOCK_ENTITIES.register("boiler_shell", () ->
                     BlockEntityType.Builder.of(BoilerShellBlockEntity::new,

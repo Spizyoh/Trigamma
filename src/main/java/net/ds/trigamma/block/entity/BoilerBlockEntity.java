@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
 
-public class BoilerBlockEntity extends BlockEntity implements IMatterBufferHolder, IPortableMachine {
+public class BoilerBlockEntity extends BlockEntity implements IMatterBufferHolder, IPortableMachine, SyncableMachine {
 
     private static final int INPUT_CAPACITY = 16000;
     private static final int OUTPUT_CAPACITY = 16000;

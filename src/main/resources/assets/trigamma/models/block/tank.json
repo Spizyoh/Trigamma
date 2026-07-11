@@ -1,0 +1,14 @@
+{
+  "loader": "neoforge:obj",
+  "model": "trigamma:models/block/machines/tank.obj",
+  "mtl_override": "trigamma:models/block/mtls/tank.mtl",
+  "automatic_culling": false,
+  "shade_quads": true,
+  "flip_v": true,
+  "textures": {
+    "texture0": "trigamma:block/tank/liquid/empty",
+    "texture1": "trigamma:block/tank/hazard/empty",
+    "texture2": "trigamma:block/tank/out",
+    "particle": "trigamma:block/tank/liquid/empty"
+  }
+}

@@ -76,24 +76,16 @@ public class MachinePortBlockEntity extends BlockEntity implements IMatterHandle
 
         DynamicPortConfig config = machine.getPortConfig(this.worldPosition);
 
-        System.out.println("Port " + worldPosition);
-        System.out.println("Config: " + config);
-        System.out.println("Matter: " + resource.id());
-
         if (config.kind() != PortKind.MATTER) {
-            System.out.println("Rejected: wrong kind");
             return 0;
         }
 
         if (config.io() != PortIO.INPUT) {
-            System.out.println("Rejected: wrong IO");
             return 0;
         }
 
         if (config.phaseFilter() != null &&
                 resource.phase() != config.phaseFilter()) {
-
-            System.out.println("Rejected: wrong phase");
             return 0;
         }
 
@@ -101,6 +93,13 @@ public class MachinePortBlockEntity extends BlockEntity implements IMatterHandle
         Optional<IMatterBuffer> bufferOpt = machine.getBufferForPort(this.worldPosition, config);
         if (bufferOpt.isEmpty()) return 0;
         IMatterBuffer buffer = bufferOpt.get();
+
+        if (machine instanceof TankBlockEntity tank) {
+            Optional<IMatter> locked = tank.getLockedMatter();
+            if (locked.isPresent() && !locked.get().id().equals(resource.id())) {
+                return 0;
+            }
+        }
 
         if (buffer.getMatter().isPresent() && !buffer.getMatter().get().id().equals(resource.id())) {
             return 0;
@@ -112,8 +111,8 @@ public class MachinePortBlockEntity extends BlockEntity implements IMatterHandle
         if (!simulate) {
             int accepted = buffer.fill(resource, space);
 
-            if (accepted > 0 && machine instanceof BoilerBlockEntity boiler) {
-                boiler.sync();
+            if (accepted > 0 && machine instanceof SyncableMachine syncable) {
+                syncable.sync();
             }
 
             setChanged();
@@ -141,6 +140,11 @@ public class MachinePortBlockEntity extends BlockEntity implements IMatterHandle
         int drained = Math.min(amount, buffer.getAmount());
         if (!simulate && drained > 0) {
             buffer.drain(drained);
+
+            if (machine instanceof SyncableMachine syncable) {
+                syncable.sync();
+            }
+
             setChanged();
         }
         return drained;

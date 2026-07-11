@@ -82,6 +82,20 @@ public class ModBlocks {
                     .mapColor(MapColor.COLOR_ORANGE)
                     .noOcclusion()));
 
+    public static final DeferredBlock<Block> TANK = registerBlock("tank",
+            () -> new TankBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0F, 100.0F)
+                    .sound(SoundType.METAL)
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .noOcclusion()));
+
+    public static final DeferredBlock<Block> TANK_SHELL = registerBlock("tank_shell",
+            () -> new TankShellBlock(BlockBehaviour.Properties.of()
+                    .strength(6.0F, 100.0F)
+                    .sound(SoundType.METAL)
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .noOcclusion()));
+
     public static final DeferredBlock<Block> BOILER_SHELL = registerBlock("boiler_shell",
             () -> new BoilerShellBlock(BlockBehaviour.Properties.of()
                     .strength(6.0F, 100.0F)
